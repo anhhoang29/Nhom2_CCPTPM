@@ -40,7 +40,7 @@
 Clone the project
 
 ```bash
-  git clone https://github.com/HNToan7202/video-editing
+  git clone https://github.com/HungDo007/video-editing
 ```
 
 Go to the project directory
