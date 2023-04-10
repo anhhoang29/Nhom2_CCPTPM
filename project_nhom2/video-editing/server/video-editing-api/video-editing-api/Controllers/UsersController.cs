@@ -103,7 +103,7 @@ namespace video_editing_api.Controllers
                     new Claim(ClaimTypes.Name,user.UserName)
                 };
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Logging:Tokens:Key"]));
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 var tokenDescriptor = new SecurityTokenDescriptor

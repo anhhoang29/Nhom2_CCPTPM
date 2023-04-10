@@ -1,0 +1,17 @@
+-- Run project 
+
+1. Thiết lập cấu hình cho npm để cho phép cài đặt các phụ thuộc cũ hơn của gói
+
+npm config set legacy-peer-deps true
+
+2. Cài đặt gói react-router-dom và bỏ qua bất kỳ cảnh báo hoặc lỗi nào bằng cách sử dụng tùy chọn --force 
+
+npm i react-router-dom --force
+
+3. Install các gói
+
+npm install
+
+4. Run project
+
+npm start
