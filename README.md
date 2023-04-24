@@ -11,7 +11,7 @@
 | Họ và tên               | Mssv     | Description          |
 | :--------               | :------- | :--------------------|
 | Vũ Hoàng Anh            | 20110205 |                      |
-| Trần trung hậu          | 20110642 |                      |
+| Trần Trung Hậu          | 20110642 |                      |
 | Phạm Nguyễn Nhựt Trường | 20110756 |                      |
 
 ![Logo](https://khaosat.hcmute.edu.vn/assets/img/login-banner.png)
