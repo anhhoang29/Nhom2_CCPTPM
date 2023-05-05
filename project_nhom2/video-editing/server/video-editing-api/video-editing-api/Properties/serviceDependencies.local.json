@@ -6,7 +6,7 @@
       "containerName": "mongodb",
       "containerImage": "mongo",
       "type": "mongodb.container",
-      "connectionId": "conDB",
+      "connectionId": "mongodb:::localhost:27017",
       "dynamicId": null
     }
   }

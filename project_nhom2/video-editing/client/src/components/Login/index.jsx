@@ -203,6 +203,18 @@ function Login() {
               Don't have account! Sign Up Now!
             </div>
           </Grid>
+          <Grid item xs={12}>
+            <div
+              style={{
+                textAlign: "center",
+                color: "#408DBA",
+                cursor: "pointer",
+              }}
+              onClick={() => navigate("/forgotPassword")}
+            >
+              Forgot password!
+            </div>
+          </Grid>
         </Grid>
       </Paper>
     </div>

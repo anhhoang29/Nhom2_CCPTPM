@@ -130,5 +130,30 @@ namespace video_editing_api.Controllers
             }
 
         }
+        [HttpPost("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword(AccountModel account)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(account.Username);
+                if (user == null)
+                {
+                    user = await _userManager.FindByEmailAsync(account.Username) != null ? await _userManager.FindByEmailAsync(account.Username) : null;
+                }
+                if (user == null)
+                {
+                    return BadRequest(new Response<string>(400, "Incorrect Username", null));
+                }
+
+                var removePassword = await _userManager.RemovePasswordAsync(user);
+                var updatePassword = await _userManager.AddPasswordAsync(user, account.Password);
+                return Ok(new Response<object>(200, "", updatePassword));
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(new Response<string>(400, e.Message, null));
+            }
+
+        }
     }
 }

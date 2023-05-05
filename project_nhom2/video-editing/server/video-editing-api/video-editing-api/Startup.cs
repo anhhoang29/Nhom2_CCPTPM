@@ -66,11 +66,11 @@ namespace video_editing_api
             #endregion
 
             #region Add Authentication
-            /*            string issuer = Configuration.GetValue<string>("Tokens:Issuer");
-                        string signingKey = Configuration.GetValue<string>("Tokens:Key");*/
-            string apiKey = Configuration.GetValue<string>("Cloudinary:APIKey");
-            string apiSecret = Configuration.GetValue<string>("Cloudinary:APISecret");
-            string signingKey = $"{apiKey}:{apiSecret}";
+            string issuer = Configuration.GetValue<string>("Tokens:Issuer");
+            string signingKey = Configuration.GetValue<string>("Tokens:Key");
+            //string apiKey = Configuration.GetValue<string>("Cloudinary:APIKey");
+            //string apiSecret = Configuration.GetValue<string>("Cloudinary:APISecret");
+            //string signingKey = $"{apiKey}:{apiSecret}";
             byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
             var key = new SymmetricSecurityKey(signingKeyBytes);
 
