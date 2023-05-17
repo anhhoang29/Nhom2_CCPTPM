@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using video_editing_api.Model;
 using video_editing_api.Model.Collection;
 using video_editing_api.Service;
@@ -74,21 +76,28 @@ namespace video_editing_api
             byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
             var key = new SymmetricSecurityKey(signingKeyBytes);
 
-            services.AddAuthentication(opt =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+         .AddJwtBearer(opt =>
+         {
+             opt.TokenValidationParameters = new TokenValidationParameters
+             {
+                 ValidateIssuer = true,
+                 ValidateAudience = true,
+                 ValidateLifetime = true,
+                 ValidateIssuerSigningKey = true,
+                 ValidIssuer = Configuration["Tokens:Issuer"],
+                 ValidAudience = Configuration["Tokens:Audience"],
+                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
+                 ClockSkew = TimeSpan.Zero
+             };
+         });
+
+            services.AddAuthorization(options =>
             {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(opt =>
-                {
-                    opt.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = key,
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
+                options.AddPolicy("Viewer", policy => policy.RequireRole("Viewer"));
+                options.AddPolicy("Uploader", policy => policy.RequireRole("Uploader"));
+                options.AddPolicy("Creator", policy => policy.RequireRole("Creator"));
+            });
             #endregion
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             #region Add Swagger

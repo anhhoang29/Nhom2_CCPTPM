@@ -53,20 +53,40 @@ function Login() {
 
     const login = async () => {
       try {
-        const body = {
-          username,
-          password,
-        };
-        var response = await userApi.signIn(body);
-        setLoading(false);
-        Cookies.set("Token", response.data.token);
-        localStorage.setItem("fullName", response.data.fullName);
-        localStorage.setItem("username", response.data.username);
-        navigate("/");
+        
+        const adminUsername = "admin";
+        const adminPassword = "Password@2910";
+
+        if (username === adminUsername && password === adminPassword) {
+          const body = {
+            adminUsername,
+            adminPassword,
+          };
+          var response = await userApi.getAllUser(body);
+          setLoading(false);
+          Cookies.set("Token", response.data.token);
+          localStorage.setItem("fullName", "Admin");
+          localStorage.setItem("username", response.data.adminUsername);
+          const userListResponse = await userApi.getAllUser(body); // Lấy danh sách user từ API
+          const userList = userListResponse.data.data; // Lấy mảng user từ response
+          navigate("/admin", { state: { userList: userList } }); // Chuyển hướng đến trang /admin và truyền userList qua props
+         
+        } else {
+          const body = {
+            username,
+            password,
+          };
+          var response = await userApi.signIn(body);
+          setLoading(false);
+          Cookies.set("Token", response.data.token);
+          localStorage.setItem("fullName", response.data.fullName);
+          localStorage.setItem("username", response.data.username);
+          navigate("/");
+        }
       } catch (error) {
         setLoading(false);
+        setMessage(error.response.data.message);
         setErr(true);
-        setMessage(error.response.data.description);
       }
     };
     login();

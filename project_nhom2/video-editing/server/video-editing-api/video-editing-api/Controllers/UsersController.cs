@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,11 +57,31 @@ namespace video_editing_api.Controllers
                     UserName = account.Username,
                     Email = account.Email,
                     FullName = account.FullName,
+                    Role = account.Role
                 };
 
                 var res = await _userManager.CreateAsync(user, account.Password);
                 if (res.Succeeded)
                 {
+                    // Assign the role based on user input
+                    if (account.Role == "Viewer")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Viewer");
+                    }
+                    else if (account.Role == "Uploader")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Uploader");
+                    }
+                    else if (account.Role == "Creator")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Creator");
+                    }
+                    else
+                    {
+                        // If no role is specified, assign the "Viewer" role by default
+                        await _userManager.AddToRoleAsync(user, "Viewer");
+                    }
+
                     return Ok(new Response<string>(200, "", "Succeed"));
                 }
                 else
@@ -73,7 +94,6 @@ namespace video_editing_api.Controllers
             {
                 return BadRequest(new Response<string>(400, e.Message, null));
             }
-
         }
 
 
@@ -154,6 +174,44 @@ namespace video_editing_api.Controllers
                 return BadRequest(new Response<string>(400, e.Message, null));
             }
 
+        }
+        [HttpGet("GetAllUsers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                var users = _userManager.Users.ToList();
+                var response = new Response<List<AppUser>>(200, "", users);
+                return Ok(response);
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(new Response<string>(400, e.Message, null));
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(id);
+                if (user == null)
+                {
+                    return NotFound(new Response<string>(404, "User not found", null));
+                }
+
+                var result = await _userManager.DeleteAsync(user);
+                if (!result.Succeeded)
+                {
+                    return BadRequest(new Response<string>(400, "An error occurred while deleting the user", null));
+                }
+
+                return Ok(new Response<string>(200, "", "User deleted successfully"));
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(new Response<string>(400, e.Message, null));
+            }
         }
     }
 }

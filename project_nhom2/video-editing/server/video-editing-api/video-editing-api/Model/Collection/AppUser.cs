@@ -8,5 +8,7 @@ namespace video_editing_api.Model.Collection
     public class AppUser : MongoIdentityUser<Guid>
     {
         public string FullName { get; set; }
+       // public string Role { get; set; }
+        
     }
 }
