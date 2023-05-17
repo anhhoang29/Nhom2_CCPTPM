@@ -1,0 +1,37 @@
+Công việc       Công việc trước    Thời gian thực hiện    Nội dung
+    A                 -                                   Xây dựng kế hoạch quản lý dự án(Tuần 1)(A)
+                                                            +Dự án hoàn thành trong thời gian 2 tháng 
+                                                            +100% các milestone và Task được setup trên 1 tool về quản lý dự án
+                                                            +100% các rủi ro có thể phát sinh trong quá trình thực hiện của nhóm làm về code được thể hiện trong file                                                                quản lý rủi ro
+                                        
+                                        
+     B                  A                                   Thực thi hệ thống với các chức năng hiện có(Tuần 2)(B)
+                                                            +100% các chức năng trong dự án được cài đặt, demo 
+                                                            +100% dự án được cấu hình trên github, có tích hợp với các tool trong môn học
+                                                            +100% cấu hình của dự án được thực hiện qua file config, không có hardcode 
+                                        
+
+Code các chức năng mới(Tuần 3/4)(D) - B
+100% các chức năng mới đề pass các test case
+Có tối thiểu 5 chức năng mới được cài đặt do nhóm đề xuất
+Có tối thiểu 5 chức năng mới được cài đặt lại do giảng viên đề xuất
+
+Deployment(Tuần 3)(C)) - B
+Hệ thống được cài đặt trên môi trường cloud của AWS sử dụng docker
+100% sử dụng CI/CD để tích hợp
+Có 3 môi trường: dev, staging, production
+
+Thực thi hệ thống với các chức năng hiện có(Tuần 2)(B)
+100% các chức năng trong dự án được cài đặt, demo 
+100% dự án được cấu hình trên github, có tích hợp với các tool trong môn học
+100% cấu hình của dự án được thực hiện qua file config, không có hardcode 
+
+Xây dựng kế hoạch quản lý dự án(Tuần 1)(A)
+Dự án hoàn thành trong thời gian 2 tháng 
+100% các milestone và Task được setup trên 1 tool về quản lý dự án
+100% các rủi ro có thể phát sinh trong quá trình thực hiện của nhóm làm về code được thể hiện trong file quản lý rủi ro
+
+Document usercase (Tuần 5)(E)
+100% các chức năng được vẽ usercase diagram 
+100% code được vẽ class diagram
+100% code được vẽ activity diagram 

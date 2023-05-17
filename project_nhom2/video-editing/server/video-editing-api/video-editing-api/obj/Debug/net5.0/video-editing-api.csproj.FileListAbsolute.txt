@@ -65,3 +65,142 @@ D:\hk2nam3\project\CC\video-editing\server\video-editing-api\video-editing-api\o
 D:\hk2nam3\project\CC\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.pdb
 D:\hk2nam3\project\CC\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.genruntimeconfig.cache
 D:\hk2nam3\project\CC\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\ref\video-editing-api.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.Development.json
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.json
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.Production.json
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\libman.json
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.exe
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.deps.json
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.runtimeconfig.json
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.runtimeconfig.dev.json
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.pdb
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\AspNetCore.Identity.MongoDbCore.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\AutoMapper.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\DnsClient.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Google.Apis.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Google.Apis.Auth.PlatformServices.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Google.Apis.Auth.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Google.Apis.Core.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Google.Apis.YouTube.v3.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.OpenApi.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\MongoDB.Bson.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\MongoDB.Driver.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\MongoDB.Driver.Core.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\MongoDB.Libmongocrypt.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\MongoDbGenericRepository.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\SharpCompress.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\linux\native\libsnappy64.so
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\linux\native\libzstd.so
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\osx\native\libsnappy64.dylib
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\osx\native\libzstd.dylib
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\libzstd.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\snappy32.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\snappy64.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\linux\native\libmongocrypt.so
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\osx\native\libmongocrypt.dylib
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\mongocrypt.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.csproj.AssemblyReference.cache
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.GeneratedMSBuildEditorConfig.editorconfig
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.AssemblyInfoInputs.cache
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.AssemblyInfo.cs
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.csproj.CoreCompileInputs.cache
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.MvcApplicationPartsAssemblyInfo.cs
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.MvcApplicationPartsAssemblyInfo.cache
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\scopedcss\bundle\video-editing-api.styles.css
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\staticwebassets\video-editing-api.StaticWebAssets.Manifest.cache
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\staticwebassets\video-editing-api.StaticWebAssets.Pack.cache
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\staticwebassets\msbuild.video-editing-api.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\staticwebassets\msbuild.build.video-editing-api.props
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\staticwebassets\msbuild.buildMultiTargeting.video-editing-api.props
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\staticwebassets\msbuild.buildTransitive.video-editing-api.props
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.RazorTargetAssemblyInfo.cache
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.csproj.CopyComplete
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\refint\video-editing-api.dll
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.pdb
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.genruntimeconfig.cache
+D:\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\ref\video-editing-api.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.Development.json
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.Production.json
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.json
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\libman.json
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.exe
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.deps.json
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.runtimeconfig.json
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.runtimeconfig.dev.json
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\video-editing-api.pdb
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\AspNetCore.Identity.MongoDbCore.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\AutoMapper.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\DnsClient.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Google.Apis.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Google.Apis.Auth.PlatformServices.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Google.Apis.Auth.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Google.Apis.Core.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Google.Apis.YouTube.v3.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.Extensions.Options.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.OpenApi.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\MongoDB.Bson.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\MongoDB.Driver.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\MongoDB.Driver.Core.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\MongoDB.Libmongocrypt.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\MongoDbGenericRepository.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\SharpCompress.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\linux\native\libsnappy64.so
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\linux\native\libzstd.so
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\osx\native\libsnappy64.dylib
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\osx\native\libzstd.dylib
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\libzstd.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\snappy32.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\snappy64.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\linux\native\libmongocrypt.so
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\osx\native\libmongocrypt.dylib
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\mongocrypt.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.csproj.AssemblyReference.cache
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.GeneratedMSBuildEditorConfig.editorconfig
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.AssemblyInfoInputs.cache
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.AssemblyInfo.cs
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.csproj.CoreCompileInputs.cache
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.MvcApplicationPartsAssemblyInfo.cs
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.MvcApplicationPartsAssemblyInfo.cache
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\scopedcss\bundle\video-editing-api.styles.css
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\staticwebassets\video-editing-api.StaticWebAssets.Manifest.cache
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.RazorTargetAssemblyInfo.cache
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.csproj.CopyComplete
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\refint\video-editing-api.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.pdb
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.genruntimeconfig.cache
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\ref\video-editing-api.dll
