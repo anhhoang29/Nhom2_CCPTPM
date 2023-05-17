@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>video_editing_api</RootNamespace>
     <UserSecretsId>645d751c-6dc2-4e5f-b2d9-c7a5458ac1fc</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
     
   </PropertyGroup>
 
