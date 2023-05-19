@@ -178,13 +178,6 @@ D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\System.Runtime.CompilerServices.Unsafe.dll
-D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\linux\native\libsnappy64.so
-D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\linux\native\libzstd.so
-D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\osx\native\libsnappy64.dylib
-D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\osx\native\libzstd.dylib
-D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\libzstd.dll
-D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\snappy32.dll
-D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\snappy64.dll
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\linux\native\libmongocrypt.so
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\osx\native\libmongocrypt.dylib
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\runtimes\win\native\mongocrypt.dll
@@ -204,3 +197,13 @@ D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.pdb
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.genruntimeconfig.cache
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\ref\video-editing-api.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\AWSSDK.Core.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\AWSSDK.SecurityToken.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.MongoDB.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Snappier.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\ZstdSharp.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
+D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\System.Linq.Async.dll

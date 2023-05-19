@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+//using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 using video_editing_api.Model;
 using video_editing_api.Model.Collection;
 using video_editing_api.Model.InputModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace video_editing_api.Controllers
 {
@@ -57,7 +59,7 @@ namespace video_editing_api.Controllers
                     UserName = account.Username,
                     Email = account.Email,
                     FullName = account.FullName,
-                    Role = account.Role
+                    //Role = account.Role
                 };
 
                 var res = await _userManager.CreateAsync(user, account.Password);
@@ -175,13 +177,65 @@ namespace video_editing_api.Controllers
             }
 
         }
+        //[HttpGet("GetAllUsers")]
+        //public async Task<IActionResult> GetAllUsers()
+        //{
+        //    try
+        //    {
+        //        var users = _userManager.Users.ToList();
+        //        var response = new Response<List<AppUser>>(200, "", users);
+        //        return Ok(response);
+        //    }
+        //    catch (System.Exception e)
+        //    {
+        //        return BadRequest(new Response<string>(400, e.Message, null));
+        //    }
+        //}
+        //[HttpGet("GetAllUsers")]
+        //public async Task<IActionResult> GetAllUsers()
+        //{
+        //    try
+        //    {
+        //        var usersWithRoles = await GetUsersWithRoles();
+
+        //        var response = new Response<List<object>>(200, "", usersWithRoles);
+        //        return Ok(response);
+        //    }
+        //    catch (System.Exception e)
+        //    {
+        //        return BadRequest(new Response<string>(400, e.Message, null));
+        //    }
+        //}
+
+        //private async Task<List<object>> GetUsersWithRoles()
+        //{
+        //    var users = await _userManager.Users.ToListAsync();
+        //    var usersWithRoles = new List<object>();
+
+        //    foreach (var user in users)
+        //    {
+        //        var roles = await _userManager.GetRolesAsync(user);
+        //        usersWithRoles.Add(new
+        //        {
+        //            user.Id,
+        //            user.UserName,
+        //            user.Email,
+        //            user.FullName,
+        //            RoleNames = roles // thêm thuộc tính RoleNames chứa tên các role
+        //        });
+        //    }
+
+        //    return usersWithRoles;
+        //}
         [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
             try
             {
-                var users = _userManager.Users.ToList();
-                var response = new Response<List<AppUser>>(200, "", users);
+                IAsyncEnumerable<AppUser> users = _userManager.Users.ToAsyncEnumerable();
+                var usersWithRoles = await GetUsersWithRoles(users);
+
+                var response = new Response<List<object>>(200, "", usersWithRoles);
                 return Ok(response);
             }
             catch (System.Exception e)
@@ -189,6 +243,27 @@ namespace video_editing_api.Controllers
                 return BadRequest(new Response<string>(400, e.Message, null));
             }
         }
+        private async Task<List<object>> GetUsersWithRoles(IAsyncEnumerable<AppUser> users)
+        {
+            var usersWithRoles = new List<object>();
+
+            await foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                usersWithRoles.Add(new
+                {
+                    user.Id,
+                    user.UserName,
+                    user.Email,
+                    user.FullName,
+                    Roles = roles
+                });
+            }
+
+            return usersWithRoles;
+        }
+
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
@@ -207,6 +282,35 @@ namespace video_editing_api.Controllers
                 }
 
                 return Ok(new Response<string>(200, "", "User deleted successfully"));
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(new Response<string>(400, e.Message, null));
+            }
+        }
+        // gán quyền cho user
+        [HttpPost("AddRole/{userId}/{roleName}")]
+        public async Task<IActionResult> AddRole(string userId, string roleName)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+
+                if (user == null)
+                {
+                    return NotFound(new Response<string>(404, "User not found", null));
+                }
+
+                var res = await _userManager.AddToRoleAsync(user, roleName);
+
+                if (res.Succeeded)
+                {
+                    return Ok(new Response<string>(200, "", "Role added successfully"));
+                }
+                else
+                {
+                    return BadRequest(new Response<string>(400, "An unknown error occurred, please try again.", null));
+                }
             }
             catch (System.Exception e)
             {
