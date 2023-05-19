@@ -22,6 +22,8 @@ import {
   SidebarHeader,
   SubMenu,
 } from "react-pro-sidebar";
+import User from "../user/user";
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
 function ResponsiveDrawer(props) {
   const [collapsed, setCollapsed] = React.useState(true);
@@ -37,6 +39,11 @@ function ResponsiveDrawer(props) {
         name: "Gallery",
         url: "/gallery",
         icon: <CollectionsOutlinedIcon />,
+      },
+      {
+        name: "User",
+        url: "/user",
+        icon: <PeopleAltIcon />,
       },
     ];
     return listItem;

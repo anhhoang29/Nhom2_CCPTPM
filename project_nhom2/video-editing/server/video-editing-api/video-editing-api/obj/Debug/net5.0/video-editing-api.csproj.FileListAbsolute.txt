@@ -204,3 +204,13 @@ D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.pdb
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.genruntimeconfig.cache
 D:\hk2nam3\cong cu\project\Nhom2_CCPTPM\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\ref\video-editing-api.dll
+D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.csproj.AssemblyReference.cache
+D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.GeneratedMSBuildEditorConfig.editorconfig
+D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.AssemblyInfoInputs.cache
+D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.AssemblyInfo.cs
+D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.csproj.CoreCompileInputs.cache
+D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.MvcApplicationPartsAssemblyInfo.cs
+D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.MvcApplicationPartsAssemblyInfo.cache
+D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.dll
+D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\refint\video-editing-api.dll
+D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.pdb
