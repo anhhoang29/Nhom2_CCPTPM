@@ -112,6 +112,96 @@ namespace video_editing_api.Controllers
                 return BadRequest(new Response<string>(400, e.Message, null));
             }
         }
+        [HttpDelete("RemoveRole/{userId}/{roleName}")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> RemoveRole(string userId, string roleName)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+
+                if (user == null)
+                {
+                    return NotFound(new Response<string>(404, "User not found", null));
+                }
+
+                var res = await _userManager.RemoveFromRoleAsync(user, roleName);
+
+                if (res.Succeeded)
+                {
+                    return Ok(new Response<string>(200, "", "Role removed successfully"));
+                }
+                else
+                {
+                    return BadRequest(new Response<string>(400, "An unknown error occurred, please try again.", null));
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new Response<string>(400, e.Message, null));
+            }
+        }
+        [HttpPut("UpdateRole/{userId}/{oldRoleName}/{newRoleName}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateRole(string userId, string oldRoleName, string newRoleName)
+        {
+            try
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+
+                if (user == null)
+                {
+                    return NotFound(new Response<string>(404, "User not found", null));
+                }
+
+                var oldRole = await _roleManager.FindByNameAsync(oldRoleName);
+
+                if (oldRole == null)
+                {
+                    return NotFound(new Response<string>(404, "Old role not found", null));
+                }
+
+                var newRole = await _roleManager.FindByNameAsync(newRoleName);
+
+                if (newRole == null)
+                {
+                    return NotFound(new Response<string>(404, "New role not found", null));
+                }
+
+                var isInOldRole = await _userManager.IsInRoleAsync(user, oldRoleName);
+
+                if (!isInOldRole)
+                {
+                    return BadRequest(new Response<string>(400, "User does not have old role", null));
+                }
+
+                var res = await _userManager.RemoveFromRoleAsync(user, oldRoleName);
+
+                if (res.Succeeded)
+                {
+                    res = await _userManager.AddToRoleAsync(user, newRoleName);
+
+                    if (res.Succeeded)
+                    {
+                        return Ok(new Response<string>(200, "", "Role updated successfully"));
+                    }
+                    else
+                    {
+                        // If adding the new role fails, add the old role back to the user
+                        await _userManager.AddToRoleAsync(user, oldRoleName);
+                        return BadRequest(new Response<string>(400, "An unknown error occurred, please try again.", null));
+                    }
+                }
+                else
+                {
+                    return BadRequest(new Response<string>(400, "An unknown error occurred, please try again.", null));
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new Response<string>(400, e.Message, null));
+            }
+        }
 
         //[HttpGet("GetAllUsersWithRoles")]
         //public async Task<IActionResult> GetAllUsersWithRoles()
