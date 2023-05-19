@@ -59,7 +59,7 @@ namespace video_editing_api.Controllers
                     UserName = account.Username,
                     Email = account.Email,
                     FullName = account.FullName,
-                    //Role = account.Role
+                    Role = account.Role
                 };
 
                 var res = await _userManager.CreateAsync(user, account.Password);
@@ -120,9 +120,12 @@ namespace video_editing_api.Controllers
                     return BadRequest(new Response<string>(400, "Incorrect Password", null));
                 }
 
+                var roles = await _userManager.GetRolesAsync(user);
+
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name,user.UserName)
+                    new Claim(ClaimTypes.Name,user.UserName),
+                    new Claim(ClaimTypes.Role, string.Join(',', roles))// thêm role
                 };
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
@@ -143,6 +146,7 @@ namespace video_editing_api.Controllers
                     Token = tokenHandler.WriteToken(token),
                     FullName = user.FullName,
                     Username = user.UserName,
+                    Role = roles
                 };
                 return Ok(new Response<object>(200, "", res));
             }
@@ -150,7 +154,6 @@ namespace video_editing_api.Controllers
             {
                 return BadRequest(new Response<string>(400, e.Message, null));
             }
-
         }
         [HttpPost("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword(AccountModel account)
