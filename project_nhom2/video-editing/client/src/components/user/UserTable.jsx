@@ -1,36 +1,36 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import { alpha } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import { visuallyHidden } from "@mui/utils";
-import "./user.css";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import { alpha } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import DeleteIcon from '@mui/icons-material/Delete';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { visuallyHidden } from '@mui/utils';
 
 function createData(createdOn, username, fullName, email, role) {
   createdOn = converDateTime(createdOn);
   return {
-    createdOn,
     username,
     fullName,
     email,
     role,
+    createdOn,
   };
 }
 
@@ -40,53 +40,25 @@ function converDateTime(currentTime){
   return readableDateTime;
 }
 
+function handleEdit(obj){
+  console.log('onEhandleEdit()');
+  console.log(obj);
+}
+
+function handleDelete(obj){
+  console.log('onEhandleEdit()');
+  console.log(obj);
+}
+
+const actionIcon = [<BorderColorIcon/>];
+
 const rows = [
   createData("2023-04-06T15:14:59.718Z" ,"hautran", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
-  createData("2023-04-06T15:14:59.718Z" ,"hoanganh", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
+  createData("2023-04-06T15:14:59.718Z" ,"hautran02", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
+  createData("2023-04-06T15:14:59.718Z" ,"hautran03", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
+  createData("2023-04-06T15:14:59.718Z" ,"hautran04", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
+  createData("2023-04-06T15:14:59.718Z" ,"hautran05", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
+  createData("2023-04-06T15:14:59.718Z" ,"hautran06", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -100,7 +72,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === "desc"
+  return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -123,15 +95,9 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "createdOn",
-    numeric: false,
-    disablePadding: true,
-    label: "Created Time",
-  },
-  {
     id: "username",
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: "Username",
   },
   {
@@ -152,17 +118,23 @@ const headCells = [
     disablePadding: false,
     label: "Role",
   },
+  {
+    id: "createdOn",
+    numeric: false,
+    disablePadding: false,
+    label: "Created Time",
+  },
+  {
+    id: "action",
+    numeric: false,
+    disablePadding: false,
+    label: "Action",
+  },
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+    props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -177,26 +149,26 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              "aria-label": "select all desserts",
+              'aria-label': 'select all desserts',
             }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={headCell.disablePadding ? "none" : "normal"}
+            align={headCell.numeric ? 'right' : 'left'}
+            padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
+              direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </Box>
               ) : null}
             </TableSortLabel>
@@ -211,7 +183,7 @@ EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
@@ -226,16 +198,13 @@ function EnhancedTableToolbar(props) {
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
+            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         }),
       }}
     >
       {numSelected > 0 ? (
         <Typography
-          sx={{ flex: "1 1 100%" }}
+          sx={{ flex: '1 1 100%' }}
           color="inherit"
           variant="subtitle1"
           component="div"
@@ -244,7 +213,7 @@ function EnhancedTableToolbar(props) {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: "1 1 100%" }}
+          sx={{ flex: '1 1 100%' }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -274,23 +243,23 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function UserTable() {
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
+export default function EnhancedTable() {
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = rows.map((n) => n.username);
       setSelected(newSelected);
       return;
     }
@@ -310,7 +279,7 @@ export default function UserTable() {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
+        selected.slice(selectedIndex + 1),
       );
     }
 
@@ -340,20 +309,20 @@ export default function UserTable() {
     () =>
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
+        page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage]
+    [order, orderBy, page, rowsPerPage],
   );
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+    <Box sx={{ width: '100%' }}>
+      <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
+            size={dense ? 'small' : 'medium'}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -377,29 +346,37 @@ export default function UserTable() {
                     tabIndex={-1}
                     key={row.username}
                     selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
+                    sx={{ cursor: 'pointer' }}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
                         color="primary"
                         checked={isItemSelected}
                         inputProps={{
-                          "aria-labelledby": labelId,
+                          'aria-labelledby': labelId,
                         }}
                       />
                     </TableCell>
                     <TableCell
-                      padding="none"
                       component="th"
-                    >
-                      {row.createdOn}
-                    </TableCell>
-                    <TableCell 
                       id={labelId}
-                      scope="row">{row.username}</TableCell>
+                      scope="row"
+                      
+                    >
+                      {row.username}
+                    </TableCell>
                     <TableCell align="right">{row.fullName}</TableCell>
                     <TableCell align="right">{row.email}</TableCell>
                     <TableCell align="right">{row.role}</TableCell>
+                    <TableCell align="right">{row.createdOn}</TableCell>
+                    <TableCell align="right" className='d-flex justify-content-end'>
+                      <div aria-label="edit" onClick={() => handleDelete(row)} className='ms-2'>
+                        <DeleteIcon style={{ color: "#1976d2" }} />
+                      </div>
+                      <div aria-label="edit" onClick={() => handleEdit(row)}>
+                        <BorderColorIcon style={{ color: "#1976d2" }} />
+                      </div>
+                    </TableCell>
                   </TableRow>
                 );
               })}

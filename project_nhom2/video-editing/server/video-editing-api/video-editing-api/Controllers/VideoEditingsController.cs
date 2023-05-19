@@ -42,6 +42,7 @@ namespace video_editing_api.Controllers
             }
         }
         [HttpPost("addTournament")]
+
         public async Task<IActionResult> AddTournament([FromBody] List<Tournament> tournaments)
         {
             try
@@ -54,9 +55,6 @@ namespace video_editing_api.Controllers
                 return BadRequest(new Response<string>(400, e.Message, null));
             }
         }
-
-
-
 
         [HttpGet("getMatchById")]
         public async Task<IActionResult> GetMatch(string Id)

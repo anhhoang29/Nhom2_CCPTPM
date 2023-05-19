@@ -6,3 +6,7 @@
 .css-177gid-MuiTableCell-root{
     text-align: left !important;
 }
+
+TextField{
+    margin: 0 !important;
+}
