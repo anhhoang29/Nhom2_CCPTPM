@@ -22,14 +22,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import { useEffect } from 'react';
 
-function createData(createdOn, username, fullName, email, role) {
+function createData(createdOn, userName, fullName, email, roles) {
   createdOn = converDateTime(createdOn);
   return {
-    username,
+    userName,
     fullName,
     email,
-    role,
+    roles,
     createdOn,
   };
 }
@@ -52,7 +53,7 @@ function handleDelete(obj){
 
 const actionIcon = [<BorderColorIcon/>];
 
-const rows = [
+const _rows = [
   createData("2023-04-06T15:14:59.718Z" ,"hautran", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
   createData("2023-04-06T15:14:59.718Z" ,"hautran02", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
   createData("2023-04-06T15:14:59.718Z" ,"hautran03", "Trần Trung Hậu", "hautran@gmail.com", 'user'),
@@ -95,7 +96,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "username",
+    id: "userName",
     numeric: false,
     disablePadding: false,
     label: "Username",
@@ -113,10 +114,10 @@ const headCells = [
     label: "Email",
   },
   {
-    id: "role",
+    id: "roles",
     numeric: false,
     disablePadding: false,
-    label: "Role",
+    label: "Roles",
   },
   {
     id: "createdOn",
@@ -243,13 +244,32 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+export default function EnhancedTable(props) {
+  const rows = props.data;
+  console.log(rows);
+
+
+
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const handleData = () => {
+    rows.forEach((row) => {
+      if(row.roles.length > 0 && (Array.isArray(row.roles))){
+        row.roles = row.roles.join(', ');
+        console.log(row.roles);
+      }
+    })
+  }
+
+
+  useEffect(() => {
+    handleData();
+  })
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -259,7 +279,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.username);
+      const newSelected = rows.map((n) => n.userName);
       setSelected(newSelected);
       return;
     }
@@ -334,17 +354,17 @@ export default function EnhancedTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.username);
+                const isItemSelected = isSelected(row.userName);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.username)}
+                    onClick={(event) => handleClick(event, row.userName)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.username}
+                    key={row.userName}
                     selected={isItemSelected}
                     sx={{ cursor: 'pointer' }}
                   >
@@ -363,11 +383,11 @@ export default function EnhancedTable() {
                       scope="row"
                       
                     >
-                      {row.username}
+                      {row.userName}
                     </TableCell>
                     <TableCell align="right">{row.fullName}</TableCell>
                     <TableCell align="right">{row.email}</TableCell>
-                    <TableCell align="right">{row.role}</TableCell>
+                    <TableCell align="right">{row.roles}</TableCell>
                     <TableCell align="right">{row.createdOn}</TableCell>
                     <TableCell align="right" className='d-flex justify-content-end'>
                       <div aria-label="edit" onClick={() => handleDelete(row)} className='ms-2'>

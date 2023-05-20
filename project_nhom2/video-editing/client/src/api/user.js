@@ -13,9 +13,9 @@ const userApi = {
     const url = "/Users/ForgotPassword";
     return axiosClient.post(url, body);
   },
-  getAllUser: (body) => {
+  getAllUser: () => {
     const url = "/Users/GetAllUsers";
-    return axiosClient.get(url,body);
+    return axiosClient.get(url);
   }
 };
 
