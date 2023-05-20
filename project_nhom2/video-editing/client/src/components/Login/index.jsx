@@ -64,7 +64,7 @@ function Login() {
         Cookies.set("Token", response.data.token);
         localStorage.setItem("fullName", response.data.fullName);
         localStorage.setItem("username", response.data.username);
-        //localStorage.setItem("role", response.data.role);
+        localStorage.setItem("role", response.data.role);
         console.log(response.data);
 
         navigate("/");

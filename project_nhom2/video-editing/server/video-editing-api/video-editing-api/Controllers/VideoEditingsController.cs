@@ -30,6 +30,9 @@ namespace video_editing_api.Controllers
 
         [HttpGet("getTournament")]
         [Authorize(Roles = "Viewer")]
+        //[Authorize(Roles = "Viewer")]
+        //[Authorize(Roles = "Creator")]
+        //[Authorize(Roles = "Uploader")]
         public async Task<IActionResult> GetTournament()
         {
             try
@@ -43,7 +46,10 @@ namespace video_editing_api.Controllers
             }
         }
         [HttpPost("addTournament")]
+        [Authorize(Roles = "Creator")]
         //[Authorize(Roles = "Viewer")]
+        //[Authorize(Roles = "Creator")]
+        //[Authorize(Roles = "Uploader")]
         public async Task<IActionResult> AddTournament([FromBody] List<Tournament> tournaments)
         {
             try
