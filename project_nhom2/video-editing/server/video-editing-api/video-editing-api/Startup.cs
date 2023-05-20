@@ -76,22 +76,53 @@ namespace video_editing_api
             byte[] signingKeyBytes = System.Text.Encoding.UTF8.GetBytes(signingKey);
             var key = new SymmetricSecurityKey(signingKeyBytes);
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-         .AddJwtBearer(opt =>
-         {
-             opt.TokenValidationParameters = new TokenValidationParameters
-             {
-                 ValidateIssuer = true,
-                 ValidateAudience = true,
-                 ValidateLifetime = true,
-                 ValidateIssuerSigningKey = true,
-                 ValidIssuer = Configuration["Tokens:Issuer"],
-                 ValidAudience = Configuration["Tokens:Audience"],
-                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
-                 ClockSkew = TimeSpan.Zero
-             };
-         });
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            // .AddJwtBearer(opt =>
+            // {
+            //     opt.TokenValidationParameters = new TokenValidationParameters
+            //     {
+            //         ValidateIssuer = true,
+            //         ValidateAudience = true,
+            //         ValidateLifetime = true,
+            //         ValidateIssuerSigningKey = true,
+            //         ValidIssuer = Configuration["Tokens:Issuer"],
+            //         ValidAudience = Configuration["Tokens:Audience"],
+            //         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
+            //         ClockSkew = TimeSpan.Zero
+            //     };
+            // });
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    //ValidateIssuer = true,
+                    //ValidateAudience = true,
+                    //ValidateLifetime = true,
+                    //ValidateIssuerSigningKey = true,
+                    //ValidIssuer = Configuration["Tokens:Issuer"],
+                    //ValidAudience = Configuration["Tokens:Audience"],
+                    //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
+                    //ClockSkew = TimeSpan.Zero
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key,
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("Viewer", policy => policy.RequireRole("Viewer"));
+            //    options.AddPolicy("Uploader", policy => policy.RequireRole("Uploader"));
+            //    options.AddPolicy("Creator", policy => policy.RequireRole("Creator"));
+            //});
+            #endregion
+            #region Add Authorization
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Viewer", policy => policy.RequireRole("Viewer"));
@@ -150,6 +181,8 @@ namespace video_editing_api
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseHttpsRedirection();
 

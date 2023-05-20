@@ -29,6 +29,7 @@ namespace video_editing_api.Controllers
 
 
         [HttpGet("getTournament")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> GetTournament()
         {
             try
@@ -42,7 +43,7 @@ namespace video_editing_api.Controllers
             }
         }
         [HttpPost("addTournament")]
-
+        //[Authorize(Roles = "Viewer")]
         public async Task<IActionResult> AddTournament([FromBody] List<Tournament> tournaments)
         {
             try
@@ -57,6 +58,7 @@ namespace video_editing_api.Controllers
         }
 
         [HttpGet("getMatchById")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> GetMatch(string Id)
         {
             try
@@ -70,6 +72,7 @@ namespace video_editing_api.Controllers
             }
         }
         [HttpGet("getMatch")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> GetMatch()
         {
             try
@@ -84,6 +87,7 @@ namespace video_editing_api.Controllers
             }
         }
         [HttpPost("addMatch")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> AddMatch([FromBody] MatchInfo matchInfo)
         {
             try
@@ -98,6 +102,7 @@ namespace video_editing_api.Controllers
             }
         }
         [HttpDelete("deleteMatch/{matchId}")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> DeleteMatch(string matchId)
         {
             try
@@ -112,6 +117,7 @@ namespace video_editing_api.Controllers
         }
 
         [HttpDelete("deleteHighlight/{id}")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> DeleteHighlight(string id)
         {
             try
@@ -126,6 +132,7 @@ namespace video_editing_api.Controllers
         }
 
         [HttpGet("getHighlight")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> GeHighligth()
         {
             try
@@ -139,6 +146,7 @@ namespace video_editing_api.Controllers
             }
         }
         [HttpGet("getHighlightOfMatch/{matchId}")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> GeHighligthOfMatch(string matchId)
         {
             try
@@ -152,6 +160,7 @@ namespace video_editing_api.Controllers
             }
         }
         [HttpGet("getHighlightHL")]
+        [Authorize(Roles = "Viewer")]
         public async Task<IActionResult> GeHighligthHL()
         {
             try
