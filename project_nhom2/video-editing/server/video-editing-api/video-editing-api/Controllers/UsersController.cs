@@ -337,6 +337,8 @@ namespace video_editing_api.Controllers
                 return BadRequest(new Response<string>(400, e.Message, null));
             }
         }
+<<<<<<< HEAD
+=======
         //[HttpPut("{id}")]
         //public async Task<IActionResult> UpdateUser(string id, AccountModel account)
         //{
@@ -387,6 +389,7 @@ namespace video_editing_api.Controllers
         //        return BadRequest(new Response<string>(400, e.Message, null));
         //    }
         //}
+>>>>>>> main
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(string id, AccountModel account)
         {
@@ -401,6 +404,9 @@ namespace video_editing_api.Controllers
                 user.UserName = account.Username;
                 user.Email = account.Email;
                 user.FullName = account.FullName;
+<<<<<<< HEAD
+                user.Role = account.Role;
+=======
 
                 if (!string.IsNullOrEmpty(account.Role))
                 {
@@ -415,10 +421,32 @@ namespace video_editing_api.Controllers
                     var removeRoles = await _userManager.RemoveFromRolesAsync(user, currentRoles);
                     var addRole = await _userManager.AddToRoleAsync(user, account.Role);
                 }
+>>>>>>> main
 
                 var res = await _userManager.UpdateAsync(user);
                 if (res.Succeeded)
                 {
+<<<<<<< HEAD
+                    // Assign the role based on user input
+                    if (account.Role == "Viewer")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Viewer");
+                    }
+                    else if (account.Role == "Uploader")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Uploader");
+                    }
+                    else if (account.Role == "Creator")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Creator");
+                    }
+                    else
+                    {
+                        // If no role is specified, assign the "Viewer" role by default
+                        await _userManager.AddToRoleAsync(user, "Viewer");
+                    }
+
+=======
                     return Ok(new Response<string>(200, "", "User information updatedsuccessfully"));
                 }
                 else
@@ -463,6 +491,7 @@ namespace video_editing_api.Controllers
                 var res = await _userManager.UpdateAsync(user);
                 if (res.Succeeded)
                 {
+>>>>>>> main
                     return Ok(new Response<string>(200, "", "User information updated successfully"));
                 }
                 else
