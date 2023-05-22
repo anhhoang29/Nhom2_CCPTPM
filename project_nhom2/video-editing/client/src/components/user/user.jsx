@@ -7,28 +7,47 @@ import "./user.css";
 import UserForm from "./UserForm";
 import userApi from "../../api/user";
 import { useEffect } from "react";
+import { useCallback } from "react";
+
+// let data = [];
+const getUsers = () => {
+  var users = [];
+  try {
+    userApi.getAllUser().then((response) => {
+      response.data.forEach((item) => {
+        users.push(item);
+      })
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  return users;
+};
+
+// data = getUsers();
+// console.log(data);
 
 const User = () => {
   const [open, setOpen] = React.useState(false);
-  const [users, setUsers] = React.useState([]);
+  const [users, setUsers] = React.useState(getUsers());
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const getUsers = async () => {
-    try {
-      await userApi.getAllUser().then((response) => {
-        setUsers(response.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getUsers = useCallback (() => {
+  //   try {
+  //     userApi.getAllUser().then((response) => {
+  //       setUsers(response.data);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, []);
 
   // GET TABLE USER
   useEffect(() => {
-    getUsers();
+    
   }, []);
 
   return (
@@ -61,7 +80,7 @@ const User = () => {
         <UserTable data={users}></UserTable>
       </div>
 
-      <UserForm openDialog={open} setOpenDialog={setOpen} />
+      <UserForm openDialog={open} setOpenDialog={setOpen}  title='Add User' txtBtn='Add'/>
     </div>
   );
 };
