@@ -29,7 +29,7 @@ namespace video_editing_api.Controllers
 
 
         [HttpGet("getTournament")]
-        [Authorize(Roles = "Viewer")]
+        [Authorize(Roles = "Viewer, Creator, Uploader")]
         public async Task<IActionResult> GetTournament()
         {
             try
