@@ -1,0 +1,26 @@
+.button {
+    min-width: 64px;   
+}
+
+.css-1azl6jz-MuiTableCell-root,
+.css-177gid-MuiTableCell-root{
+    text-align: left !important;
+}
+
+TextField{
+    margin: 0 !important;
+}
+
+form{
+    width: 100%;
+}
+
+.css-1hjhl9b .MuiTextField-root {
+    margin: 0 !important;
+    margin-top: 16px !important;
+}
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    width: 100%;
+}
+

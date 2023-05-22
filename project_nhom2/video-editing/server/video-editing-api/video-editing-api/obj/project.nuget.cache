@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fCMIkTr1lphyHwJ04gTiPAfs/I6Lc6X4xRPioiVfCBNCmoQXPVX1XOrfqTPeQNloNFGFvHzDTe9+d+E83Mt9Bg==",
+  "dgSpecHash": "H2IdP7GhX0ccZxBO8P02Kbq67Gto0mEDbI2yULunW5O0X9OpysH/Ote2rQSfFj6btqi/NVXAq8YDMV8T/v7hGA==",
   "success": true,
-  "projectFilePath": "D:\\hk2nam3\\cong cu\\project\\Nhom2_CCPTPM\\Nhom2_CCPTPM\\project_nhom2\\video-editing\\server\\video-editing-api\\video-editing-api\\video-editing-api.csproj",
+  "projectFilePath": "D:\\hk2nam3\\cong cu\\project\\v2\\Nhom2_CCPTPM\\project_nhom2\\video-editing\\server\\video-editing-api\\video-editing-api\\video-editing-api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\aspnetcore.identity.mongodbcore\\3.1.2\\aspnetcore.identity.mongodbcore.3.1.2.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
