@@ -24,3 +24,16 @@ form{
     width: 100%;
 }
 
+.textError{
+    color: red;
+}
+
+th, td {
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    white-space: nowrap;
+}
+
+.icon:hover{
+    color: #444 !important;
+}

@@ -14,10 +14,24 @@ import FormLabel from "@mui/material/FormLabel";
 import "./user.css";
 import { userApi } from "../../api";
 
-const UserForm = (props) => {
-  const { openDialog, title, txtBtn } = props;
+const checkData = (data) => {
+    console.log(data);
+    let obj = {};
+    if(data) {
+        console.log('yes');
+        obj.userName = data?.userName || '';
+        console.log(obj);
+    }
+    return obj
+}
+
+const EditUserForm = (props) => {
+  const { openDialog, title, txtBtn, data, userName} = props;
   // let formTitle = "Add User";
-  // let formButtonText = "Add";.. 
+  // let formButtonText = "Add";.
+
+  const input = checkData(data);
+  console.log(userName);
 
   const formCancelButtonText = "Cancel";
   const wrongPassword = "Password does not match";
@@ -25,15 +39,15 @@ const UserForm = (props) => {
 
   const [formTitle, setFormTitle] = React.useState(title);
   const [formButtonText, setFormButtonText] = React.useState(txtBtn);
-  const [username, setUsername] = React.useState('');
-  const [fullName, setFullName] = React.useState('');
-  const [email, setEmail] = React.useState('');
+  const [username, setUsername] = React.useState(input.userName);
+  const [fullName, setFullName] = React.useState(data?.fullName || '');
+  const [email, setEmail] = React.useState(data?.email || '');
   const [viewer, setViewer] = React.useState(true);
   const [creator, setCreator] = React.useState(false);
   const [uploader, setUploader] = React.useState(false);
 
-  const [password, setPassword] = React.useState("");
-  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [password, setPassword] = React.useState(data?.password || '');
+  const [confirmPassword, setConfirmPassword] = React.useState(data?.password || '');
   const [isPasswordNotMatch, setIsPasswordNotMatch] = React.useState(false);
   const strEmpty = "Empty field!";
 
@@ -257,6 +271,7 @@ const UserForm = (props) => {
               id="email"
               label="Email"
               type="email"
+              value={email}
               required
               fullWidth
               error={emailError !== " "}
@@ -271,6 +286,7 @@ const UserForm = (props) => {
               id="password"
               label="Password"
               type="password"
+              value={password}
               required
               fullWidth
               error={passwordError !== " "}
@@ -285,6 +301,7 @@ const UserForm = (props) => {
               id="confirmPassword"
               label="Confirm Password"
               type="password"
+              value={confirmPassword}
               error={isPasswordNotMatch}
               required
               fullWidth
@@ -330,4 +347,4 @@ const UserForm = (props) => {
   );
 };
 
-export default UserForm;
+export default EditUserForm;

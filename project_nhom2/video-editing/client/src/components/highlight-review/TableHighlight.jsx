@@ -13,7 +13,6 @@ import {
 import Highlighter from "react-highlight-words";
 import { Table, Input, Button, Space, Tag } from "antd";
 import "../VideoInput/table-video.css";
-import "antd/dist/antd.css";
 import { FormShareYoutube } from "../flugin";
 
 function TableHighlight(props) {

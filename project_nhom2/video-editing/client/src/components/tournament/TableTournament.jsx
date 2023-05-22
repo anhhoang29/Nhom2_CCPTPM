@@ -4,7 +4,6 @@ import Highlighter from "react-highlight-words";
 import { SearchOutlined, CalendarOutlined } from "@ant-design/icons";
 import { Link, IconButton, Tooltip } from "@mui/material";
 import "../VideoInput/table-video.css";
-import "antd/dist/antd.css";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
