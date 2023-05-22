@@ -142,7 +142,7 @@ namespace video_editing_api.Controllers
             }
         }
         [HttpPut("UpdateRole/{userId}/{oldRoleName}/{newRoleName}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateRole(string userId, string oldRoleName, string newRoleName)
         {
             try
@@ -234,6 +234,5 @@ namespace video_editing_api.Controllers
         //    }
         //}
     }
-
 }
 
