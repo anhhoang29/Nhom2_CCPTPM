@@ -1,5 +1,4 @@
 import React, { useCallback, useRef, useState } from "react";
-import "antd/dist/antd.css";
 import { Button, Checkbox, Table } from "antd";
 import update from "immutability-helper";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircleOutline";

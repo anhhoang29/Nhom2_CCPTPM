@@ -3,7 +3,6 @@ import { Table, Input, Button, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import "./table-video.css";
-import "antd/dist/antd.css";
 import { formatTimeSlice } from "./video-input";
 import { Checkbox } from "@mui/material";
 
