@@ -8,31 +8,46 @@ import UserForm from "./UserForm";
 import userApi from "../../api/user";
 import { useEffect } from "react";
 import { useCallback } from "react";
-
-// let data = [];
-const getUsers = () => {
-  var users = [];
-  try {
-    userApi.getAllUser().then((response) => {
-      response.data.forEach((item) => {
-        users.push(item);
-      })
-    });
-  } catch (error) {
-    console.log(error);
-  }
-  return users;
-};
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 // data = getUsers();
 // console.log(data);
+export const UserContext = React.createContext();
 
+let dataValue = [];
 const User = () => {
   const [open, setOpen] = React.useState(false);
-  const [users, setUsers] = React.useState(getUsers());
+  const [openSnack, setOpenSnack] = React.useState(false);
+  // const [users, setUsers] = React.useState([
+  //   {id: '2e306c1c-683d-4dae-ab12-74c1131786ae', userName: 'hautran', email: 'hautran@gmail.com', fullName: 'Tran Trung Hau',},
+  //   {id: '956693da-b54f-49cc-9e25-3e17d6701592', userName: 'hautran02', email: 'hautran02@gmail.com', fullName: 'Tran Trung Hau'},
+  //   ]);
+  const [users, setUsers] = React.useState([]);
+  const [fetchData, setFetchData] = React.useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
+  const getUsers = async () => {
+    let response = await userApi.getAllUser();
+    dataValue = response.data;
+    console.log("data:");
+    setUsers(dataValue);
+  };
+  
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  const handleClickDelete = () => {
+    enqueueSnackbar('This is a success message!', {variant:"warning"});
+  }
+
+  const handleClick = () => {
+    enqueueSnackbar("I love snacks.");
+  };
+
+  const handleClickVariant = (variant) => () => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar("This is a success message!", { variant });
   };
 
   // const getUsers = useCallback (() => {
@@ -47,11 +62,11 @@ const User = () => {
 
   // GET TABLE USER
   useEffect(() => {
-    
+    getUsers();
   }, []);
 
   return (
-    <div className="container-fluid">
+    <UserContext.Provider value={{users, getUsers}} className="container-fluid">
       <div className="row title">
         <div className="d-flex justify-content-between mb-4">
           <h2>User Manager</h2>
@@ -59,6 +74,7 @@ const User = () => {
             <Button
               variant="outlined"
               className="ms-3 button"
+              onClick={handleClickDelete}
               startIcon={<DeleteIcon />}
             >
               Delete
@@ -80,8 +96,13 @@ const User = () => {
         <UserTable data={users}></UserTable>
       </div>
 
-      <UserForm openDialog={open} setOpenDialog={setOpen}  title='Add User' txtBtn='Add'/>
-    </div>
+      <UserForm
+        openDialog={open}
+        setOpenDialog={setOpen}
+        title="Add User"
+        txtBtn="Add"
+      />
+    </UserContext.Provider>
   );
 };
 

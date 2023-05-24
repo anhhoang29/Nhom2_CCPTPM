@@ -20,6 +20,7 @@
     "immutability-helper": "latest",
     "js-cookie": "^3.0.1",
     "js-file-download": "^0.4.12",
+    "notistack": "^3.0.1",
     "query-string": "^7.1.1",
     "react": "latest",
     "react-dnd": "latest",
