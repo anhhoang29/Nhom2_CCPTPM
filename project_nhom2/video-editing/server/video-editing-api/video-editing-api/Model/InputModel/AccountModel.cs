@@ -9,6 +9,8 @@ namespace video_editing_api.Model.InputModel
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Role { get; set; } // add this property
+        public string Role { get; set; }
+        public string[] Roles { get; set; } // thuộc tính roles là một mảng
+
     }
 }
