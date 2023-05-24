@@ -37,3 +37,11 @@ th, td {
 .icon:hover{
     color: #444 !important;
 }
+
+.ss-pdct74-MuiTablePagination-selectLabel{
+    margin-bottom:  0 !important;
+}
+
+p {
+    margin-bottom: 0 !important;
+}

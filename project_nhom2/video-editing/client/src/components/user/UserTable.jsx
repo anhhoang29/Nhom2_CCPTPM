@@ -28,17 +28,7 @@ import { userApi } from "../../api";
 import { Api } from "@mui/icons-material";
 import UserForm from "./UserForm";
 import EditUserForm from "./EditUserForm";
-
-function createData(createdOn, userName, fullName, email, roles) {
-  createdOn = converDateTime(createdOn);
-  return {
-    userName,
-    fullName,
-    email,
-    roles,
-    createdOn,
-  };
-}
+import { UserContext } from "./user";
 
 function converDateTime(currentTime) {
   const dateTime = new Date(currentTime);
@@ -47,51 +37,6 @@ function converDateTime(currentTime) {
 }
 
 const actionIcon = [<BorderColorIcon />];
-
-const _rows = [
-  createData(
-    "2023-04-06T15:14:59.718Z",
-    "hautran",
-    "Trần Trung Hậu",
-    "hautran@gmail.com",
-    "user"
-  ),
-  createData(
-    "2023-04-06T15:14:59.718Z",
-    "hautran02",
-    "Trần Trung Hậu",
-    "hautran@gmail.com",
-    "user"
-  ),
-  createData(
-    "2023-04-06T15:14:59.718Z",
-    "hautran03",
-    "Trần Trung Hậu",
-    "hautran@gmail.com",
-    "user"
-  ),
-  createData(
-    "2023-04-06T15:14:59.718Z",
-    "hautran04",
-    "Trần Trung Hậu",
-    "hautran@gmail.com",
-    "user"
-  ),
-  createData(
-    "2023-04-06T15:14:59.718Z",
-    "hautran05",
-    "Trần Trung Hậu",
-    "hautran@gmail.com",
-    "user"
-  ),
-  createData(
-    "2023-04-06T15:14:59.718Z",
-    "hautran06",
-    "Trần Trung Hậu",
-    "hautran@gmail.com",
-    "user"
-  ),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -301,6 +246,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function EnhancedTable(props) {
+  const { users, getUsers } = React.useContext(UserContext);
   const [order, setOrder] = React.useState("desc");
   const [orderBy, setOrderBy] = React.useState("userName");
   const [selected, setSelected] = React.useState([]);
@@ -308,10 +254,8 @@ export default function EnhancedTable(props) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [numbers, setNumbers] = React.useState([]);
-  const [rows, setRows] = React.useState(props.data);
   const [open, setOpen] = React.useState(false);
   const [objEdit, setObjEdit] = React.useState();
-
 
   const handleEdit = (obj, event) => {
     setOpen(true);
@@ -325,10 +269,12 @@ export default function EnhancedTable(props) {
     if (obj.id) {
       try {
         userApi.deleteUser(obj.id);
+        window.location.reload(false);
       } catch (error) {
         console.log(error);
       }
     }
+
   };
 
   const handleAssnignRoles = (obj) => {
@@ -341,7 +287,7 @@ export default function EnhancedTable(props) {
 
   const init = React.useCallback(() => {
     const handleData = () => {
-      rows.forEach((row) => {
+      users.forEach((row) => {
         if (row.roles.length > 0 && Array.isArray(row.roles)) {
           row.roles = row.roles.join(", ");
         }
@@ -349,7 +295,7 @@ export default function EnhancedTable(props) {
 
       const getNumbers = () => {
         let nbs = [];
-        for (let i = 1; i <= rows.length; i++) {
+        for (let i = 1; i <= users.length; i++) {
           nbs.push(i);
         }
         setNumbers(nbs);
@@ -368,7 +314,7 @@ export default function EnhancedTable(props) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n);
+      const newSelected = users.map((n) => n);
       setSelected(newSelected);
       return;
     }
@@ -412,11 +358,11 @@ export default function EnhancedTable(props) {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
 
   const visibleRows = React.useMemo(
     () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
+      stableSort(users, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
       ),
@@ -441,7 +387,7 @@ export default function EnhancedTable(props) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={users.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -515,7 +461,7 @@ export default function EnhancedTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={users.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

@@ -13,11 +13,12 @@ import Checkbox from "@mui/material/Checkbox";
 import FormLabel from "@mui/material/FormLabel";
 import "./user.css";
 import { userApi } from "../../api";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 const UserForm = (props) => {
   const { openDialog, title, txtBtn } = props;
   // let formTitle = "Add User";
-  // let formButtonText = "Add";.. 
+  // let formButtonText = "Add";..
 
   const formCancelButtonText = "Cancel";
   const wrongPassword = "Password does not match";
@@ -25,9 +26,9 @@ const UserForm = (props) => {
 
   const [formTitle, setFormTitle] = React.useState(title);
   const [formButtonText, setFormButtonText] = React.useState(txtBtn);
-  const [username, setUsername] = React.useState('');
-  const [fullName, setFullName] = React.useState('');
-  const [email, setEmail] = React.useState('');
+  const [username, setUsername] = React.useState("");
+  const [fullName, setFullName] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [viewer, setViewer] = React.useState(true);
   const [creator, setCreator] = React.useState(false);
   const [uploader, setUploader] = React.useState(false);
@@ -41,6 +42,7 @@ const UserForm = (props) => {
   const [fullNameError, setFullNameError] = React.useState(" ");
   const [emailError, setEmailError] = React.useState(" ");
   const [passwordError, setPasswordError] = React.useState(" ");
+  const { enqueueSnackbar } = useSnackbar();
 
   // Role: start
   const handleViewerChange = (event) => {
@@ -73,8 +75,7 @@ const UserForm = (props) => {
   };
 
   const handleSubmit = (event) => {
-    userApi.addRoles('2e306c1c-683d-4dae-ab12-74c1131786ae', 'Creator');
-
+    addUser(event);
     if (isValidate()) {
       // handleClose();
       addUser(event);
@@ -123,10 +124,30 @@ const UserForm = (props) => {
     return rs;
   };
 
-  const addUser = (event) => {
-    event.preventDefault();
-    const roles = getRoles();
+  const signUp = async (body) => {
 
+    userApi
+      .signUp(body)
+      .then((res) => {
+        enqueueSnackbar("Create a successful user", { variant: "success" });
+
+        addRoles();
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.message, { variant: "error" });
+      });
+  };
+
+  const addRoles = async() => {
+    const roles = getRoles();
+    try {
+      await userApi.addRoles();
+    } catch (error){
+      console.log(error);
+    }
+  }
+
+  const addUser = (event) => {
     const body = {
       username,
       fullName,
@@ -134,25 +155,7 @@ const UserForm = (props) => {
       password,
     };
 
-    const signUp = async () => {
-      try {
-        await userApi.signUp(body);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const addRoles = async() => {
-      try {
-        await userApi.addRoles(body);
-      } catch (error){
-        console.log(error);
-      }
-    }
-
-    signUp();
-    // addRoles();
-    console.log('da signup');
+    signUp(body);
   };
 
   const handleConfirmPassword = () => {

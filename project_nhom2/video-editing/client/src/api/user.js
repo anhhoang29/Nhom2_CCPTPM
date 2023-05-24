@@ -5,7 +5,7 @@ const userApi = {
     const url = "/Users/SignIn";
     return axiosClient.post(url, body);
   },
-  signUp: (body) => {
+  signUp: async (body) => {
     const url = "/Users/SignUp";
     return axiosClient.post(url, body);
   },
@@ -13,9 +13,11 @@ const userApi = {
     const url = "/Users/ForgotPassword";
     return axiosClient.post(url, body);
   },
-  getAllUser: () => {
+  getAllUser: async () => {
     const url = "/Users/GetAllUsers";
-    return axiosClient.get(url);
+    let response= await axiosClient.get(url);
+   // const result=data.response.data
+    return response;
   },
 
   addRoles: (userId, roleName) => {
