@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.Development.json
 D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.json
 D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.Production.json
@@ -73,6 +75,7 @@ D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\
 D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.pdb
 D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.genruntimeconfig.cache
 D:\CC_Project\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\ref\video-editing-api.dll
+>>>>>>> 215a24fb47a226ec30f6da74a31ec5b2a59b4664
 D:\hk2nam3\cong cu\project\v2\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.Development.json
 D:\hk2nam3\cong cu\project\v2\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.json
 D:\hk2nam3\cong cu\project\v2\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\appsettings.Production.json
