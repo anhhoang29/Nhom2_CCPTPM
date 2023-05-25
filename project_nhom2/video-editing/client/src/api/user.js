@@ -15,13 +15,13 @@ const userApi = {
   },
   getAllUser: async () => {
     const url = "/Users/GetAllUsers";
-    let response= await axiosClient.get(url);
+    let response = await axiosClient.get(url);
    // const result=data.response.data
     return response;
   },
 
   addRoles: (userId, roleName) => {
-    const url = `/Users/AddRole/${userId}/${roleName}`;
+    const url = `/Role/AddRole/${userId}/${roleName}`;
     return axiosClient.post(url);
   },
 
