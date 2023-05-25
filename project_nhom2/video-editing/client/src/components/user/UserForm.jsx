@@ -43,7 +43,8 @@ const UserForm = (props) => {
   const [emailError, setEmailError] = React.useState(" ");
   const [passwordError, setPasswordError] = React.useState(" ");
   const { enqueueSnackbar } = useSnackbar();
-
+  
+  const [idSignUp, setIdSignUp] = React.useState('');
   // Role: start
   const handleViewerChange = (event) => {
     setViewer(event.target.checked);
@@ -75,7 +76,6 @@ const UserForm = (props) => {
   };
 
   const handleSubmit = (event) => {
-    addUser(event);
     if (isValidate()) {
       // handleClose();
       addUser(event);
@@ -119,31 +119,50 @@ const UserForm = (props) => {
     if (uploader) {
       rs.push("Uploader");
     }
-    console.log(rs);
-
     return rs;
   };
 
   const signUp = async (body) => {
-
     userApi
       .signUp(body)
       .then((res) => {
         enqueueSnackbar("Create a successful user", { variant: "success" });
-
-        addRoles();
+        console.log(res);
+        // get Id from response
+        addRoles(res.data.id);
       })
       .catch((error) => {
+        console.log(error);
         enqueueSnackbar(error.message, { variant: "error" });
       });
   };
 
-  const addRoles = async() => {
-    const roles = getRoles();
-    try {
-      await userApi.addRoles();
-    } catch (error){
-      console.log(error);
+  // const addRole = async (id, role) => {
+  //   userApi.addRoles(id , role).then(res => {
+  //     console.log(res);
+  //     enqueueSnackbar(`Add ${role} Role Successfully`, { variant: "success" });
+  //   }).catch(error => {
+  //     enqueueSnackbar(`Add ${role} Role Faild`, { variant: 'error' });
+  //   })
+  // }
+
+  const addRoles = async (id) => {
+    if(creator){
+      const response = await userApi.addRoles(id, 'Creator');
+      console.log(response);
+      if(response.data){
+        enqueueSnackbar(`Add Creator Role Successfully`, { variant: "success" });
+      } else{
+        enqueueSnackbar(`Add Uploader Role Faild`, { variant: 'error' });
+      }
+    }
+    if(uploader){
+      const response = await userApi.addRoles(id, 'Uploader');
+      if(response.data){
+        enqueueSnackbar(`Add Uploader Role Successfully`, { variant: "success" });
+      } else{
+        enqueueSnackbar(`Add Creator Role Faild`, { variant: 'error' });
+      }
     }
   }
 
@@ -155,7 +174,7 @@ const UserForm = (props) => {
       password,
     };
 
-    signUp(body);
+    signUp(body)
   };
 
   const handleConfirmPassword = () => {
