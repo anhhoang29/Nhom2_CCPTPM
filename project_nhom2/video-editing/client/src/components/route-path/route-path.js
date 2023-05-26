@@ -21,7 +21,7 @@ const isAdmin = localStorage.getItem("isAdmin");
 
 function RoutePath() {
 
-  return isAdmin === true ? (
+  return isAdmin === 'true' ? (
     <Routes>
       <Route path="/admin">
         <Route path="user" element={<User />} />

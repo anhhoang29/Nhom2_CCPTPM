@@ -31,7 +31,7 @@ function ResponsiveDrawer(props) {
   const [listItem, setListItem] = React.useState(() => {
     const isAdmin = localStorage.getItem('isAdmin');
     let listItem;
-    if(isAdmin === true) {
+    if(isAdmin === 'true') {
       console.log('is Admin');
       listItem = [
         {

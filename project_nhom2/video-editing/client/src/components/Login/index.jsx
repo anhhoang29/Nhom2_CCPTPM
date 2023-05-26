@@ -67,7 +67,11 @@ function Login() {
         localStorage.setItem("role", response.data.role);
         const isAdmin = response.data.role.includes('Admin');
         localStorage.setItem("isAdmin", isAdmin);
-        navigate("/");
+        if(isAdmin){
+          navigate("/admin/user")
+        } else {
+          navigate("/");
+        }
       } catch (error) {
         setLoading(false);
         setErr(true);
