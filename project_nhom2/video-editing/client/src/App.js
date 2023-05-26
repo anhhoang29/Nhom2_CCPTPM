@@ -23,7 +23,7 @@ function App(props) {
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
       maxSnack={12}
       disableWindowBlurListener={true}
-      autoHideDuration={1000}
+      autoHideDuration={5000}
     >
       <div className="App">
         <RootRouters />
