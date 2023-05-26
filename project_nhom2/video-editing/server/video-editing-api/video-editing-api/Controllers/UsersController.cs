@@ -59,29 +59,29 @@ namespace video_editing_api.Controllers
                     UserName = account.Username,
                     Email = account.Email,
                     FullName = account.FullName,
-                    Role = string.IsNullOrEmpty(account.Role) || (account.Role != "Viewer" && account.Role != "Uploader" && account.Role != "Creator") ? "Viewer" : account.Role
+                    Role = string.IsNullOrEmpty(account.Role) || (account.Role != "Read" && account.Role != "Write" && account.Role != "Excute") ? "Read" : account.Role
                 };
 
                 var res = await _userManager.CreateAsync(user, account.Password);
                 if (res.Succeeded)
                 {
                     // Assign the role based on user input
-                    if (account.Role == "Viewer")
+                    if (account.Role == "Read")
                     {
-                        await _userManager.AddToRoleAsync(user, "Viewer");
+                        await _userManager.AddToRoleAsync(user, "Read");
                     }
-                    else if (account.Role == "Uploader")
+                    else if (account.Role == "Write")
                     {
-                        await _userManager.AddToRoleAsync(user, "Uploader");
+                        await _userManager.AddToRoleAsync(user, "Write");
                     }
-                    else if (account.Role == "Creator")
+                    else if (account.Role == "Excute")
                     {
-                        await _userManager.AddToRoleAsync(user, "Creator");
+                        await _userManager.AddToRoleAsync(user, "Excute");
                     }
                     else
                     {
-                        // If no role is specified, assign the "Viewer" role by default
-                        await _userManager.AddToRoleAsync(user, "Viewer");
+                        // If no role is specified, assign the "Read" role by default
+                        await _userManager.AddToRoleAsync(user, "Read");
                     }
 
                     // Retrieve the user information from the database
@@ -357,22 +357,22 @@ namespace video_editing_api.Controllers
         //        if (res.Succeeded)
         //        {
         //            //// Assign the role based on user input
-        //            //if (account.Role == "Viewer")
+        //            //if (account.Role == "Read")
         //            //{
-        //            //    await _userManager.AddToRoleAsync(user, "Viewer");
+        //            //    await _userManager.AddToRoleAsync(user, "Read");
         //            //}
-        //            //else if (account.Role == "Uploader")
+        //            //else if (account.Role == "Write")
         //            //{
-        //            //    await _userManager.AddToRoleAsync(user, "Uploader");
+        //            //    await _userManager.AddToRoleAsync(user, "Write");
         //            //}
-        //            //else if (account.Role == "Creator")
+        //            //else if (account.Role == "Excute")
         //            //{
-        //            //    await _userManager.AddToRoleAsync(user, "Creator");
+        //            //    await _userManager.AddToRoleAsync(user, "Excute");
         //            //}
         //            //else
         //            //{
-        //            //    // If no role is specified, assign the "Viewer" role by default
-        //            //    await _userManager.AddToRoleAsync(user, "Viewer");
+        //            //    // If no role is specified, assign the "Read" role by default
+        //            //    await _userManager.AddToRoleAsync(user, "Read");
         //            //}
 
         //            return Ok(new Response<string>(200, "", "User information updated successfully"));
@@ -387,6 +387,7 @@ namespace video_editing_api.Controllers
         //        return BadRequest(new Response<string>(400, e.Message, null));
         //    }
         //}
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(string id, AccountModel account)
         {
@@ -401,11 +402,12 @@ namespace video_editing_api.Controllers
                 user.UserName = account.Username;
                 user.Email = account.Email;
                 user.FullName = account.FullName;
+                user.Role = account.Role;
 
                 if (!string.IsNullOrEmpty(account.Role))
                 {
                     // Validate Role input
-                    var validRoles = new List<string> { "Viewer", "Uploader", "Creator" };
+                    var validRoles = new List<string> { "Read", "Write", "Excute" };
                     if (!validRoles.Contains(account.Role))
                     {
                         return BadRequest(new Response<string>(400, "Invalid role", null));
@@ -419,6 +421,24 @@ namespace video_editing_api.Controllers
                 var res = await _userManager.UpdateAsync(user);
                 if (res.Succeeded)
                 {
+                    // Assign the role based on user input
+                    if (account.Role == "Read")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Read");
+                    }
+                    else if (account.Role == "Write")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Write");
+                    }
+                    else if (account.Role == "Excute")
+                    {
+                        await _userManager.AddToRoleAsync(user, "Excute");
+                    }
+                    else
+                    {
+                        // If no role is specified, assign the "Read" role by default
+                        await _userManager.AddToRoleAsync(user, "Read");
+                    }
                     return Ok(new Response<string>(200, "", "User information updatedsuccessfully"));
                 }
                 else
@@ -449,7 +469,7 @@ namespace video_editing_api.Controllers
                 if (!string.IsNullOrEmpty(account.Role))
                 {
                     // Validate Role input
-                    var validRoles = new List<string> { "Viewer", "Uploader", "Creator" };
+                    var validRoles = new List<string> { "Read", "Write", "Excute" };
                     if (!validRoles.Contains(account.Role))
                     {
                         return BadRequest(new Response<string>(400, "Invalid role", null));
@@ -475,51 +495,51 @@ namespace video_editing_api.Controllers
                 return BadRequest(new Response<string>(400, e.Message, null));
             }
         }
-        [HttpPut("{username}")]
-        public async Task<IActionResult> UpdateUserWithRoles(string username, AccountModel account)
-        {
-            try
-            {
-                var user = await _userManager.FindByNameAsync(username);
-                if (user == null)
-                {
-                    return NotFound(new Response<string>(404, "User not found", null));
-                }
+        //[HttpPut("{username}")]
+        //public async Task<IActionResult> UpdateUserWithRoles(string username, AccountModel account)
+        //{
+        //    try
+        //    {
+        //        var user = await _userManager.FindByNameAsync(username);
+        //        if (user == null)
+        //        {
+        //            return NotFound(new Response<string>(404, "User not found", null));
+        //        }
 
-                // Update email and full name
-                user.Email = account.Email;
-                user.FullName = account.FullName;
+        //        // Update email and full name
+        //        user.Email = account.Email;
+        //        user.FullName = account.FullName;
 
-                // Update roles
-                if (account.Roles != null && account.Roles.Any())
-                {
-                    // Validate roles
-                    var validRoles = new List<string> { "Viewer", "Uploader", "Creator" };
-                    if (!account.Roles.All(r => validRoles.Contains(r)))
-                    {
-                        return BadRequest(new Response<string>(400, "Invalid role", null));
-                    }
+        //        // Update roles
+        //        if (account.Roles != null && account.Roles.Any())
+        //        {
+        //            // Validate roles
+        //            var validRoles = new List<string> { "Read", "Write", "Excute" };
+        //            if (!account.Roles.All(r => validRoles.Contains(r)))
+        //            {
+        //                return BadRequest(new Response<string>(400, "Invalid role", null));
+        //            }
 
-                    // Remove all existing roles and assign new roles to the user
-                    var currentRoles = await _userManager.GetRolesAsync(user);
-                    var removeRoles = await _userManager.RemoveFromRolesAsync(user, currentRoles);
-                    var addRoles = await _userManager.AddToRolesAsync(user, account.Roles);
-                }
+        //            // Remove all existing roles and assign new roles to the user
+        //            var currentRoles = await _userManager.GetRolesAsync(user);
+        //            var removeRoles = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+        //            var addRoles = await _userManager.AddToRolesAsync(user, account.Roles);
+        //        }
 
-                var res = await _userManager.UpdateAsync(user);
-                if (res.Succeeded)
-                {
-                    return Ok(new Response<string>(200, "", "User information updated successfully"));
-                }
-                else
-                {
-                    return BadRequest(new Response<string>(400, "An unknown error occurred, please try again.", null));
-                }
-            }
-            catch (System.Exception e)
-            {
-                return BadRequest(new Response<string>(400, e.Message, null));
-            }
-        }
+        //        var res = await _userManager.UpdateAsync(user);
+        //        if (res.Succeeded)
+        //        {
+        //            return Ok(new Response<string>(200, "", "User information updated successfully"));
+        //        }
+        //        else
+        //        {
+        //            return BadRequest(new Response<string>(400, "An unknown error occurred, please try again.", null));
+        //        }
+        //    }
+        //    catch (System.Exception e)
+        //    {
+        //        return BadRequest(new Response<string>(400, e.Message, null));
+        //    }
+        //}
     }
 }

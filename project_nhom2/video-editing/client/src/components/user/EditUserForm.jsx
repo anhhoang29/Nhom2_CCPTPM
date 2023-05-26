@@ -15,12 +15,9 @@ import "./user.css";
 import { userApi } from "../../api";
 
 const checkData = (data) => {
-    console.log(data);
     let obj = {};
     if(data) {
-        console.log('yes');
         obj.userName = data?.userName || '';
-        console.log(obj);
     }
     return obj
 }
@@ -132,7 +129,6 @@ const EditUserForm = (props) => {
     if (uploader) {
       rs.push("Uploader");
     }
-    console.log(rs);
 
     return rs;
   };
@@ -166,7 +162,6 @@ const EditUserForm = (props) => {
 
     signUp();
     // addRoles();
-    console.log('da signup');
   };
 
   const handleConfirmPassword = () => {
