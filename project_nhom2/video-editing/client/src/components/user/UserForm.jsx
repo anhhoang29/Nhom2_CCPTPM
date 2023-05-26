@@ -122,18 +122,32 @@ const UserForm = (props) => {
     return rs;
   };
 
-  const signUp = async (body) => {
+  const signUp = (body) => {
+    // const res = userApi.signUp(body);
+    // if(res.data){
+    //   enqueueSnackbar("Create a successful user", { variant: "success" });
+    //   addRoles(res.data.id);
+    // } else{
+    //   enqueueSnackbar(`${res.status}: ${res.description}`, { variant: "error" });
+    // }
     userApi
       .signUp(body)
       .then((res) => {
         enqueueSnackbar("Create a successful user", { variant: "success" });
         console.log(res);
+        props.setOpenDialog(false);
+        window.location.reload(false);
         // get Id from response
         addRoles(res.data.id);
       })
       .catch((error) => {
-        console.log(error);
-        enqueueSnackbar(error.message, { variant: "error" });
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          enqueueSnackbar(error.response.data.description, { variant: "error" });
+        } else{
+          enqueueSnackbar(error.message, { variant: "error" });
+        }
       });
   };
 
