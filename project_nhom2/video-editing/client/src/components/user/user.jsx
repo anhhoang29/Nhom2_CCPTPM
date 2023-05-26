@@ -49,6 +49,7 @@ const User = () => {
     // variant could be success, error, warning, info, or default
     enqueueSnackbar("This is a success message!", { variant });
   };
+  //const [selectedUser, setSelectedUser] = React.useState(null);
 
   // const getUsers = useCallback (() => {
   //   try {
@@ -59,6 +60,24 @@ const User = () => {
   //     console.log(error);
   //   }
   // }, []);
+  // const User = () => {
+  //   const [users, setUsers] = useState([]);
+    
+  //   const getUsers = useCallback(() => {
+  //     userApi.getAllUser().then(setUsers);
+  //   }, []);
+    
+  //   const handleClick = () => {
+  //     getUsers();
+  //   }
+    
+  //   return (
+  //     <button onClick={handleClick}>Load Users</button> 
+  //     {users.map(user => (
+  //       <p key={user.id}>{user.name}</p>  
+  //     ))}   
+  //   )
+  // };
 
   // GET TABLE USER
   useEffect(() => {
