@@ -65,8 +65,8 @@ function Login() {
         localStorage.setItem("fullName", response.data.fullName);
         localStorage.setItem("username", response.data.username);
         localStorage.setItem("role", response.data.role);
-        console.log(response.data);
-
+        const isAdmin = response.data.role.includes('Admin');
+        localStorage.setItem("isAdmin", isAdmin);
         navigate("/");
       } catch (error) {
         setLoading(false);
