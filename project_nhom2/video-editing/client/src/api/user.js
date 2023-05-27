@@ -20,9 +20,11 @@ const userApi = {
     return response;
   },
 
-  addRoles: (userId, roleName) => {
+  addRoles: async (userId, roleName) => {
     const url = `/Role/AddRole/${userId}/${roleName}`;
-    return axiosClient.post(url);
+    const http = axiosClient;
+    http.defaults.timeout= 1000;
+    return http.post(url);
   },
 
   deleteUser: (id) => {

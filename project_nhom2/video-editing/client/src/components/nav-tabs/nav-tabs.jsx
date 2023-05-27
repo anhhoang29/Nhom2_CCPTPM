@@ -27,7 +27,6 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
 function ResponsiveDrawer(props) {
   const [collapsed, setCollapsed] = React.useState(true);
-  console.log(props.children);
   const [listItem, setListItem] = React.useState(() => {
     const isAdmin = localStorage.getItem('isAdmin');
     let listItem;

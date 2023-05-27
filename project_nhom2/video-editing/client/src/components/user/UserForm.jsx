@@ -14,21 +14,82 @@ import FormLabel from "@mui/material/FormLabel";
 import "./user.css";
 import { userApi } from "../../api";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import { useEffect } from "react";
+import roleApi from "../../api/roles";
+import { ROLE_ADMIN, ROLE_READ } from "./../../constants/index.js";
+
+const getAllRolesNotAdmin = async () => {
+  let roles = [];
+
+  try {
+    const res = await roleApi.getAll();
+    roles = res.data;
+  } catch (error) {
+    console.log(error);
+  }
+  const rolesNotAdmin = roles.filter(
+    (item) => item !== ROLE_ADMIN && item !== ROLE_READ
+  );
+  return rolesNotAdmin;
+};
+
+const rolesApi = await getAllRolesNotAdmin();
+
+var rolesChecked = [];
+
+const RoleCheckbox = ({ selectRole }) => {
+  let roleCheckbox = [];
+  selectRole = [];
+  const handleChangeCheckbox = (event) => {
+    console.log("checkbox change", event);
+    if (event.target.checked) {
+      rolesChecked.push(event.target.name);
+      selectRole.push(event.target.name);
+    } else {
+      const index = rolesChecked.indexOf(event.target.name);
+      if (index !== -1) {
+        rolesChecked.splice(index, 1);
+        selectRole.splice(index, 1);
+      }
+      // setRoles(roles.filter(role => role !== event.target.name));
+    }
+    console.log(rolesChecked);
+  };
+
+  rolesApi.forEach((roleName) => {
+    const form = (
+      <FormControlLabel
+        control={
+          <Checkbox
+            onChange={handleChangeCheckbox}
+            name={roleName}
+            value={roleName}
+          />
+        }
+        label={roleName}
+        value={roleName}
+      />
+    );
+    roleCheckbox.push(form);
+  });
+  return roleCheckbox;
+};
 
 const UserForm = (props) => {
   const { openDialog, title, txtBtn } = props;
+  let selectRole = [];
   // let formTitle = "Add User";
   // let formButtonText = "Add";..
 
   const formCancelButtonText = "Cancel";
   const wrongPassword = "Password does not match";
   // set Title:
-
   const [formTitle, setFormTitle] = React.useState(title);
   const [formButtonText, setFormButtonText] = React.useState(txtBtn);
   const [username, setUsername] = React.useState("");
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [roles, setRoles] = React.useState([]);
   const [viewer, setViewer] = React.useState(true);
   const [creator, setCreator] = React.useState(false);
   const [uploader, setUploader] = React.useState(false);
@@ -43,8 +104,7 @@ const UserForm = (props) => {
   const [emailError, setEmailError] = React.useState(" ");
   const [passwordError, setPasswordError] = React.useState(" ");
   const { enqueueSnackbar } = useSnackbar();
-  
-  const [idSignUp, setIdSignUp] = React.useState('');
+
   // Role: start
   const handleViewerChange = (event) => {
     setViewer(event.target.checked);
@@ -76,6 +136,7 @@ const UserForm = (props) => {
   };
 
   const handleSubmit = (event) => {
+    console.log(event);
     if (isValidate()) {
       // handleClose();
       addUser(event);
@@ -111,76 +172,72 @@ const UserForm = (props) => {
     return !isError;
   };
 
-  const getRoles = () => {
-    let rs = [];
-    if (creator) {
-      rs.push("Creator");
-    }
-    if (uploader) {
-      rs.push("Uploader");
-    }
-    return rs;
-  };
-
-  const signUp = (body) => {
-    // const res = userApi.signUp(body);
-    // if(res.data){
-    //   enqueueSnackbar("Create a successful user", { variant: "success" });
-    //   addRoles(res.data.id);
-    // } else{
-    //   enqueueSnackbar(`${res.status}: ${res.description}`, { variant: "error" });
+  const signUp = async (body) => {
+    // try {
+    //   const response = await userApi.signUp(body);
+    //   if (response.data) {
+    //     await addRoles(response.data.id);
+    //     enqueueSnackbar("Create a successful user", { variant: "success" });
+    //   } else {
+    //     if (response.description) {
+    //       enqueueSnackbar(response.description, { variant: "error" });
+    //     } else {
+    //       enqueueSnackbar("Add User Faild", { variant: "error" });
+    //     }
+    //   }
+    // } catch (error) {
+    //   enqueueSnackbar(error.message, { variant: "error" });
     // }
     userApi
       .signUp(body)
       .then((res) => {
-        enqueueSnackbar("Create a successful user", { variant: "success" });
-        console.log(res);
-        props.setOpenDialog(false);
-        window.location.reload(false);
-        // get Id from response
-        addRoles(res.data.id);
+        if (res.data) {
+          enqueueSnackbar("Create a successful user", { variant: "success" });
+          setTimeout(() => {
+            addRoles(res.data.id);
+          }, 1500);
+          props.setOpenDialog(false);
+          window.location.reload(false);
+        }
       })
       .catch((error) => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          enqueueSnackbar(error.response.data.description, { variant: "error" });
-        } else{
-          enqueueSnackbar(error.message, { variant: "error" });
-        }
+        enqueueSnackbar(error.message, { variant: "error" });
+      }).finally(()=>{
+
       });
   };
 
-  // const addRole = async (id, role) => {
-  //   userApi.addRoles(id , role).then(res => {
-  //     console.log(res);
-  //     enqueueSnackbar(`Add ${role} Role Successfully`, { variant: "success" });
-  //   }).catch(error => {
-  //     enqueueSnackbar(`Add ${role} Role Faild`, { variant: 'error' });
-  //   })
-  // }
-
   const addRoles = async (id) => {
-    if(creator){
-      const response = await userApi.addRoles(id, 'Creator');
-      console.log(response);
-      if(response.data){
-        enqueueSnackbar(`Add Creator Role Successfully`, { variant: "success" });
-      } else{
-        enqueueSnackbar(`Add Uploader Role Faild`, { variant: 'error' });
-      }
-    }
-    if(uploader){
-      const response = await userApi.addRoles(id, 'Uploader');
-      if(response.data){
-        enqueueSnackbar(`Add Uploader Role Successfully`, { variant: "success" });
-      } else{
-        enqueueSnackbar(`Add Creator Role Faild`, { variant: 'error' });
-      }
-    }
-  }
+    rolesChecked.forEach(async (role) => {
+      setTimeout(async () => {
+        // userApi
+        //   .addRoles(id, role)
+        //   .then((res) => {
+        //     enqueueSnackbar(`Add ${role} Role Successfully`, {
+        //       variant: "success",
+        //     });
+        //   })
+        //   .catch((error) => {
+        //     enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
+        //   });
+        try {
+          const response = await userApi.addRoles(id, role);
+          if (response.data) {
+            enqueueSnackbar(`Add ${role} Role Successfully`, {
+              variant: "success",
+            });
+          } else {
+            enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
+          }
+        } catch (error) {
+          enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
+        }
+      }, 1000);
+    });
+    rolesChecked = [];
+  };
 
-  const addUser = (event) => {
+  const addUser = async (event) => {
     const body = {
       username,
       fullName,
@@ -188,7 +245,7 @@ const UserForm = (props) => {
       password,
     };
 
-    signUp(body)
+    signUp(body);
   };
 
   const handleConfirmPassword = () => {
@@ -233,6 +290,8 @@ const UserForm = (props) => {
     // All requirements are met
     return true;
   }
+
+  useEffect(() => {}, []);
 
   return (
     <Box
@@ -340,20 +399,7 @@ const UserForm = (props) => {
               Pick Roles *
             </FormLabel>
             <FormGroup className="d-flex flex-row justify-content-evenly">
-              <FormControlLabel
-                control={
-                  <Checkbox onChange={handleViewerChange} defaultChecked />
-                }
-                label="Viewer"
-              />
-              <FormControlLabel
-                control={<Checkbox onChange={handleCreatorChange} />}
-                label="Creator"
-              />
-              <FormControlLabel
-                control={<Checkbox onChange={handleUploaderChange} />}
-                label="Uploader"
-              />
+              <RoleCheckbox selectRole={selectRole} />
             </FormGroup>
           </Box>
         </DialogContent>
