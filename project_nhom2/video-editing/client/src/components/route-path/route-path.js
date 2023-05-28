@@ -14,23 +14,34 @@ import Film from "../Film";
 import HighlightFilter from "../HiglightFilter/highlight-filter";
 import Gallery from "../Gallery";
 import User from "../user/user";
+import UserLayout from "../layout/UserLayout";
+import AdminLayout from "../layout/AdminLayout";
+
+const isAdmin = localStorage.getItem("isAdmin");
 
 function RoutePath() {
-  return (
-    <Routes>
-      <Route path="/" element={<Tournament />} />
-      <Route path="/actions-labeling" element={<ActionsLabeling />} />
-      <Route path="/model" element={<ModelManagement />} />
-      <Route path="/model/configuration" element={<ModelConfiguration />} />
-      <Route path="/video" element={<VideoManagement />} />
-      <Route path="/tournament" element={<Tournament />} />
-      <Route path="/film" element={<Film />} />
-      <Route path="/video-edit" element={<VideoInput />} />
-      <Route path="/highlight-review" element={<HighlightReview />} />
-      <Route path="/highlight" element={<HighlightFilter />} />
-      <Route path="/gallery" element={<Gallery />} />
-      <Route path="/user" element={<User />} />
 
+  return isAdmin === 'true' ? (
+    <Routes>
+      <Route path="/admin">
+        <Route path="user" element={<User />} />
+      </Route>
+    </Routes>
+  ) : (
+    <Routes>
+      <Route path="/">
+        <Route path="/" element={<Tournament />} />
+        <Route path="/actions-labeling" element={<ActionsLabeling />} />
+        <Route path="/model" element={<ModelManagement />} />
+        <Route path="/model/configuration" element={<ModelConfiguration />} />
+        <Route path="/video" element={<VideoManagement />} />
+        <Route path="/tournament" element={<Tournament />} />
+        <Route path="/film" element={<Film />} />
+        <Route path="/video-edit" element={<VideoInput />} />
+        <Route path="/highlight-review" element={<HighlightReview />} />
+        <Route path="/highlight" element={<HighlightFilter />} />
+        <Route path="/gallery" element={<Gallery />} />
+      </Route>
     </Routes>
   );
 }

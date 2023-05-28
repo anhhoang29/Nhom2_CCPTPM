@@ -7,6 +7,7 @@ import NavTabs from "../nav-tabs/nav-tabs";
 import Login from "../Login";
 import SignUp from "../Login/sign-up";
 import ForgotPassword from "../Login/forgot-password";
+import AdminRoutePath from "./admin-route-path";
 //IndexImportHygen
 
 function rootRouters() {

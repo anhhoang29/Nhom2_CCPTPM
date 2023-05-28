@@ -27,25 +27,36 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
 function ResponsiveDrawer(props) {
   const [collapsed, setCollapsed] = React.useState(true);
+  console.log(props.children);
   const [listItem, setListItem] = React.useState(() => {
-    const listItem = [
-      { name: "Soccer", url: "/", icon: <SportsSoccerIcon /> },
-      {
-        name: "Highlight",
-        url: "/highlight",
-        icon: <MovieIcon />,
-      },
-      {
-        name: "Gallery",
-        url: "/gallery",
-        icon: <CollectionsOutlinedIcon />,
-      },
-      {
-        name: "User",
-        url: "/user",
-        icon: <PeopleAltIcon />,
-      },
-    ];
+    const isAdmin = localStorage.getItem('isAdmin');
+    let listItem;
+    if(isAdmin === 'true') {
+      console.log('is Admin');
+      listItem = [
+        {
+          name: "User",
+          url: "/admin/user",
+          icon: <PeopleAltIcon />,
+        },
+      ];
+    } else {
+      console.log('is Not Admin');
+
+      listItem = [
+        { name: "Soccer", url: "/", icon: <SportsSoccerIcon /> },
+        {
+          name: "Highlight",
+          url: "/highlight",
+          icon: <MovieIcon />,
+        },
+        {
+          name: "Gallery",
+          url: "/gallery",
+          icon: <CollectionsOutlinedIcon />,
+        },
+      ];
+    }
     return listItem;
   });
   let navigate = useNavigate();
@@ -88,7 +99,7 @@ function ResponsiveDrawer(props) {
 
   return (
     <>
-      <div className="app">
+      <div className="app w-100">
         <ProSidebar image={imgBG} collapsed={collapsed} breakPoint="md">
           <SidebarHeader>
             <span className={collapsed ? "" : "hidden"}>

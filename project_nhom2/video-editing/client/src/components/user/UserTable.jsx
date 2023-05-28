@@ -29,6 +29,9 @@ import { Api } from "@mui/icons-material";
 import UserForm from "./UserForm";
 import EditUserForm from "./EditUserForm";
 import { UserContext } from "./user";
+import { SnackbarProvider, useSnackbar } from "notistack";
+import Moment from 'react-moment';
+
 
 function converDateTime(currentTime) {
   const dateTime = new Date(currentTime);
@@ -75,7 +78,13 @@ const headCells = [
     id: "numbers",
     numeric: true,
     disablePadding: false,
-    label: "",
+    label: "#",
+  },
+  {
+    id: "createdOn",
+    numeric: false,
+    disablePadding: false,
+    label: "Created Time",
   },
   {
     id: "userName",
@@ -101,12 +110,6 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: "Roles",
-  },
-  {
-    id: "createdOn",
-    numeric: false,
-    disablePadding: false,
-    label: "Created Time",
   },
   {
     id: "action",
@@ -146,7 +149,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align={"left"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -179,6 +182,8 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { numSelected, selected } = props;
 
   const handleDeleteAll = (event) => {
@@ -186,6 +191,8 @@ function EnhancedTableToolbar(props) {
       selected.forEach((item) => {
         userApi.deleteUser(item.id);
       })
+      enqueueSnackbar('Detele All Successfully', {variant: 'success'});
+      window.location.reload(false);
     }
   }
 
@@ -256,25 +263,29 @@ export default function EnhancedTable(props) {
   const [numbers, setNumbers] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [objEdit, setObjEdit] = React.useState();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleEdit = (obj, event) => {
     setOpen(true);
     setObjEdit(obj);
   };
 
-  const handleDelete = (obj, event) => {
-    event.preventDefault();
-    console.log("onEhandleDelete()");
-    console.log(obj);
-    if (obj.id) {
-      try {
-        userApi.deleteUser(obj.id);
-        window.location.reload(false);
-      } catch (error) {
-        console.log(error);
-      }
+  const handleDelete = async (obj, event) => {
+    const res = await userApi.deleteUser(obj.id);
+    try {
+      if(res.data) {
+        enqueueSnackbar(res.data, { variant: "success" });
+        await window.location.reload(false);
+      } else {
+        if(res.description){
+          enqueueSnackbar(res.description, { variant: 'error' });
+        } else {
+          enqueueSnackbar('Delete Failed', { variant: 'error' });
+        }
+      } 
+    } catch {
+      enqueueSnackbar('Delete Failed, Try again', { variant: 'error' });
     }
-
   };
 
   const handleAssnignRoles = (obj) => {
@@ -369,7 +380,9 @@ export default function EnhancedTable(props) {
     [order, orderBy, page, rowsPerPage]
   );
 
-  init();
+  init()
+  useEffect(() => {
+  })
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -415,6 +428,7 @@ export default function EnhancedTable(props) {
                       />
                     </TableCell>
                     <TableCell align="right" onClick={(event) => handleClick(event, row)}>{index}</TableCell>
+                    <TableCell align="right" onClick={(event) => handleClick(event, row)}><Moment format="YYYY/MM/DD hh:mm">{row.createOn}</Moment></TableCell>
                     <TableCell
                       align="right"
                       component="th"
@@ -425,10 +439,9 @@ export default function EnhancedTable(props) {
                     >
                       {row.userName}
                     </TableCell>
-                    <TableCell align="right">{row.fullName}</TableCell>
-                    <TableCell align="right">{row.email}</TableCell>
-                    <TableCell align="right">{row.roles}</TableCell>
-                    <TableCell align="right">{row.createdOn}</TableCell>
+                    <TableCell align="right" onClick={(event) => handleClick(event, row)}>{row.fullName}</TableCell>
+                    <TableCell align="right" onClick={(event) => handleClick(event, row)}>{row.email}</TableCell>
+                    <TableCell align="right" onClick={(event) => handleClick(event, row)}>{row.roles}</TableCell>
                     <TableCell
                       align="right"
                       className="d-flex justify-content-end"
