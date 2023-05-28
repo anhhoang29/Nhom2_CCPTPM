@@ -5,6 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "antd/dist/antd.min.css";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import AuthDialog from "./components/dialog/auth-dialog";
+
+
 
 function App(props) {
   const { enqueueSnackbar } = useSnackbar();
@@ -27,6 +30,7 @@ function App(props) {
     >
       <div className="App">
         <RootRouters />
+        <AuthDialog/>
       </div>
     </SnackbarProvider>
   );

@@ -64,11 +64,12 @@ function Login() {
         Cookies.set("Token", response.data.token);
         localStorage.setItem("fullName", response.data.fullName);
         localStorage.setItem("username", response.data.username);
-        localStorage.setItem("role", response.data.role);
-        const isAdmin = response.data.role.includes('Admin');
+        // Phân quyền: lưu danh sách các quyền vào localStrorage
+        localStorage.setItem("roles", response.data.role);
+        const isAdmin = response.data.role.includes("Admin");
         localStorage.setItem("isAdmin", isAdmin);
-        if(isAdmin){
-          navigate("/admin/user")
+        if (isAdmin) {
+          navigate("/admin/user");
         } else {
           navigate("/");
         }

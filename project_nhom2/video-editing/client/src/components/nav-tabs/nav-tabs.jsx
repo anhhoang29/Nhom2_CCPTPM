@@ -62,6 +62,7 @@ function ResponsiveDrawer(props) {
   const handleLogout = () => {
     Cookies.remove("Token");
     localStorage.removeItem("fullName");
+    localStorage.removeItem("roles");
     navigate("/login");
   };
   const handleCollapsed = () => {

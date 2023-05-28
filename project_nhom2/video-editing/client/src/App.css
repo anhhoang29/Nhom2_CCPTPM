@@ -32,3 +32,7 @@ tr.drop-over-upward td {
 .ant-popover {
   z-index: 1000000000000000000000000;
 }
+
+.large-icon {
+  transform: scale(1.8);
+}

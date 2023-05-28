@@ -22,6 +22,10 @@ import { ConfirmDialog, CustomDatePicker } from "../flugin";
 import { useNavigate } from "react-router-dom";
 import { FileUploader } from "react-drag-drop-files";
 import TableTournament from "./TableTournament";
+import { DesktopDatePicker } from "@mui/lab";
+import AuthDialog from "../dialog/auth-dialog";
+import { ROLE_EXCUTE, ROLE_WRITE } from "../../constants";
+import { SnackbarProvider, useSnackbar } from "notistack";
 
 const Tournament = () => {
   const [opendialog, setOpenDialog] = useState(false);
@@ -45,8 +49,15 @@ const Tournament = () => {
   const [noti, setNoti] = useState(false);
   const [message, setMessage] = useState();
   const [typeNoti, setTypeNoti] = useState();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [file, setFile] = useState(null);
+  const [authDialog, setAuthDialog] = useState({
+    open: false,
+    content: false,
+  });
+
+  const authRoles = localStorage.getItem('roles');
 
   let navigate = useNavigate();
 
@@ -69,39 +80,42 @@ const Tournament = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    var a = hidden ? tournament.id : null;
-    var b = hidden ? null : tournamentName;
-    const payload = {
-      tournamentId: a,
-      tournametName: b,
-      matchName: matchName,
-      mactchTime: `${time
-        .toLocaleString("sv", { timeZoneName: "short" })
-        .substring(0, 10)}T${("0" + time.getHours()).slice(-2)}:${(
-        "0" + time.getMinutes()
-      ).slice(-2)}:${("0" + time.getSeconds()).slice(-2)}.000Z`,
-      channel: channel,
-      ip: ip,
-      port: port,
-    };
-
-    const addTournament = async () => {
-      try {
-        const response = await videoEditingApi.addMatch(payload);
-        if (response.status === 200 && response.data === "Succeed") {
+    if(authRoles.includes(ROLE_WRITE)){
+      var a = hidden ? tournament.id : null;
+      var b = hidden ? null : tournamentName;
+      const payload = {
+        tournamentId: a,
+        tournametName: b,
+        matchName: matchName,
+        mactchTime: `${time
+          .toLocaleString("sv", { timeZoneName: "short" })
+          .substring(0, 10)}T${("0" + time.getHours()).slice(-2)}:${(
+          "0" + time.getMinutes()
+        ).slice(-2)}:${("0" + time.getSeconds()).slice(-2)}.000Z`,
+        channel: channel,
+        ip: ip,
+        port: port,
+      };
+  
+      const addTournament = async () => {
+        try {
+          const response = await videoEditingApi.addMatch(payload);
+          if (response.status === 200 && response.data === "Succeed") {
+            setNoti(true);
+            getMatches();
+            enqueueSnackbar('Add Match Successfully', {variant: 'success'});
+          }
+        } catch (error) {
           setNoti(true);
-          setMessage("Saved");
-          setTypeNoti("success");
-          getMatches();
+          enqueueSnackbar('Add Match Faild', {variant: 'error'});
+          setTypeNoti("error");
+          console.log(error);
         }
-      } catch (error) {
-        setNoti(true);
-        setMessage(error.response.description);
-        setTypeNoti("error");
-        console.log(error);
-      }
-    };
-    addTournament();
+      };
+      addTournament();
+    } else {
+      setAuthDialog({open: true});
+    }
   };
 
   const handleUploadClick = () => {
@@ -132,14 +146,22 @@ const Tournament = () => {
   };
 
   const handleIconUploadClick = (match) => {
-    setUploadId(match.id);
-    setFile(null);
-    setOpenDialog(true);
+    if(authRoles.includes(ROLE_EXCUTE)){
+      setUploadId(match.id);
+      setFile(null);
+      setOpenDialog(true);
+    } else {
+      setAuthDialog({open: true});
+    }
   };
 
   const handleIconDeleteClick = (match) => {
-    setOpenDConfirm(true);
-    setRowDelete(match);
+    if(authRoles.includes(ROLE_WRITE)){
+      setOpenDConfirm(true);
+      setRowDelete(match);
+    } else {
+      setAuthDialog({open: true});
+    }
   };
 
   useEffect(() => {
@@ -408,7 +430,12 @@ const Tournament = () => {
         handleResultClick={handleResultClick}
         handleIconUploadClick={handleIconUploadClick}
         handleIconDeleteClick={handleIconDeleteClick}
+        openAuthDialog={authDialog.open}
+        setOpenAuthDialog = {setAuthDialog}
+        content={authDialog.content}
       />
+
+      <AuthDialog open={authDialog.open} setOpen={setAuthDialog} content={authDialog.content}/>
     </>
   );
 };
