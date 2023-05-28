@@ -234,9 +234,13 @@ function HighlightFilter() {
   };
 
   const handleIconRemoveEventClick = (row) => {
-    const temp = [...filtered];
-    const afterRemove = temp.filter((item) => item.file_name !== row.file_name);
-    setFiltered(afterRemove);
+    if(authRoles.includes(ROLE_WRITE)){
+      const temp = [...filtered];
+      const afterRemove = temp.filter((item) => item.file_name !== row.file_name);
+      setFiltered(afterRemove);
+    } else {
+      setAuthDialog({open: true});
+    }
   };
 
   const handleEditVideo = () => {

@@ -72,10 +72,12 @@ export default function AuthDialog(props) {
           id="customized-dialog-title"
           onClose={handleClose}
           className='text-white'
+          sx={{backgroundColor: '#de3641'}}
         >
           
         </BootstrapDialogTitle>
-        <DialogContent className="container d-flex justify-content-center flex-column pb-4 w-80">
+        <DialogContent className="container d-flex justify-content-center flex-column pb-4 w-80" sx={{backgroundColor: '#de3641'}
+        }>
           <div className="w-100 text-center pb-4 pt-2">
             <GppBadOutlinedIcon sx={{color: '#fff'}} className="large-icon" fontSize='large'/>
           </div>
@@ -83,7 +85,7 @@ export default function AuthDialog(props) {
             <h4 className='text-white mb-0'>{props.content ? props.content : 'You do not have access'}</h4>
           </div>
         </DialogContent>
-        <DialogActions className="px-4">
+        <DialogActions className="px-4" sx={{backgroundColor: '#de3641'}}>
 
         </DialogActions>
       </BootstrapDialog>

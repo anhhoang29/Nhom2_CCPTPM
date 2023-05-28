@@ -13,38 +13,100 @@ import Checkbox from "@mui/material/Checkbox";
 import FormLabel from "@mui/material/FormLabel";
 import "./user.css";
 import { userApi } from "../../api";
+import { SnackbarProvider, useSnackbar } from "notistack";
+import { useEffect } from "react";
+import roleApi from "../../api/roles";
+import { ROLE_ADMIN, ROLE_READ } from "./../../constants/index.js";
 
-const checkData = (data) => {
-    let obj = {};
-    if(data) {
-        obj.userName = data?.userName || '';
+const getAllRolesNotAdmin = async () => {
+  let roles = [];
+
+  try {
+    const res = await roleApi.getAll();
+    roles = res.data;
+  } catch (error) {
+    console.log(error);
+  }
+  const rolesNotAdmin = roles.filter(
+    (item) => item !== ROLE_ADMIN && item !== ROLE_READ
+  );
+  return rolesNotAdmin;
+};
+
+const rolesApi = await getAllRolesNotAdmin();
+
+var rolesChecked = [];
+
+const RoleCheckbox = ({ selectRole }) => {
+  let roleCheckbox = [];
+  selectRole = [];
+  const handleChangeCheckbox = (event) => {
+    console.log("checkbox change", event);
+    if (event.target.checked) {
+      rolesChecked.push(event.target.name);
+      selectRole.push(event.target.name);
+    } else {
+      const index = rolesChecked.indexOf(event.target.name);
+      if (index !== -1) {
+        rolesChecked.splice(index, 1);
+        selectRole.splice(index, 1);
+      }
+      // setRoles(roles.filter(role => role !== event.target.name));
     }
-    return obj
-}
+    console.log(rolesChecked);
+  };
 
-const EditUserForm = (props) => {
-  const { openDialog, title, txtBtn, data, userName} = props;
+  rolesApi.forEach((roleName) => {
+    const form = (
+      <FormControlLabel
+        control={
+          <Checkbox
+            onChange={handleChangeCheckbox}
+            name={roleName}
+            value={roleName}
+          />
+        }
+        label={roleName}
+        value={roleName}
+        sx={{ color: "#000" }}
+      />
+    );
+    roleCheckbox.push(form);
+  });
+  return roleCheckbox;
+};
+
+const UserForm = (props) => {
+  const {
+    data,
+    openDialog,
+    title,
+    txtBtn,
+    username,
+    fullName,
+    email,
+    password,
+    roles,
+  } = props;
+  let selectRole = [];
   // let formTitle = "Add User";
-  // let formButtonText = "Add";.
-
-  const input = checkData(data);
-  console.log(userName);
+  // let formButtonText = "Add";..
 
   const formCancelButtonText = "Cancel";
   const wrongPassword = "Password does not match";
   // set Title:
-
   const [formTitle, setFormTitle] = React.useState(title);
   const [formButtonText, setFormButtonText] = React.useState(txtBtn);
-  const [username, setUsername] = React.useState(input.userName);
-  const [fullName, setFullName] = React.useState(data?.fullName || '');
-  const [email, setEmail] = React.useState(data?.email || '');
+  // const [username, setUsername] = React.useState(props.data?.userName | '');
+  // const [fullName, setFullName] = React.useState();
+  // const [email, setEmail] = React.useState();
+  // const [roles, setRoles] = React.useState([]);
   const [viewer, setViewer] = React.useState(true);
   const [creator, setCreator] = React.useState(false);
   const [uploader, setUploader] = React.useState(false);
 
-  const [password, setPassword] = React.useState(data?.password || '');
-  const [confirmPassword, setConfirmPassword] = React.useState(data?.password || '');
+  // const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
   const [isPasswordNotMatch, setIsPasswordNotMatch] = React.useState(false);
   const strEmpty = "Empty field!";
 
@@ -52,6 +114,7 @@ const EditUserForm = (props) => {
   const [fullNameError, setFullNameError] = React.useState(" ");
   const [emailError, setEmailError] = React.useState(" ");
   const [passwordError, setPasswordError] = React.useState(" ");
+  const { enqueueSnackbar } = useSnackbar();
 
   // Role: start
   const handleViewerChange = (event) => {
@@ -72,11 +135,11 @@ const EditUserForm = (props) => {
   const handleClose = () => {
     props.setOpenDialog(false);
     setIsPasswordNotMatch(false);
-    setUsername("");
-    setFullName("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
+    // setUsername("");
+    // setFullName("");
+    // setEmail("");
+    // setPassword("");
+    // setConfirmPassword("");
   };
 
   const isEmpty = (str) => {
@@ -84,8 +147,7 @@ const EditUserForm = (props) => {
   };
 
   const handleSubmit = (event) => {
-    userApi.addRoles('2e306c1c-683d-4dae-ab12-74c1131786ae', 'Creator');
-
+    console.log(event);
     if (isValidate()) {
       // handleClose();
       addUser(event);
@@ -121,22 +183,71 @@ const EditUserForm = (props) => {
     return !isError;
   };
 
-  const getRoles = () => {
-    let rs = [];
-    if (creator) {
-      rs.push("Creator");
-    }
-    if (uploader) {
-      rs.push("Uploader");
-    }
-
-    return rs;
+  const signUp = async (body) => {
+    // try {
+    //   const response = await userApi.signUp(body);
+    //   if (response.data) {
+    //     await addRoles(response.data.id);
+    //     enqueueSnackbar("Create a successful user", { variant: "success" });
+    //   } else {
+    //     if (response.description) {
+    //       enqueueSnackbar(response.description, { variant: "error" });
+    //     } else {
+    //       enqueueSnackbar("Add User Faild", { variant: "error" });
+    //     }
+    //   }
+    // } catch (error) {
+    //   enqueueSnackbar(error.message, { variant: "error" });
+    // }
+    userApi
+      .signUp(body)
+      .then((res) => {
+        if (res.data) {
+          enqueueSnackbar("Create a successful user", { variant: "success" });
+          setTimeout(() => {
+            addRoles(res.data.id);
+          }, 1500);
+          props.setOpenDialog(false);
+          window.location.reload(false);
+        }
+      })
+      .catch((error) => {
+        enqueueSnackbar(error.message, { variant: "error" });
+      })
+      .finally(() => {});
   };
 
-  const addUser = (event) => {
-    event.preventDefault();
-    const roles = getRoles();
+  const addRoles = async (id) => {
+    rolesChecked.forEach(async (role) => {
+      setTimeout(async () => {
+        // userApi
+        //   .addRoles(id, role)
+        //   .then((res) => {
+        //     enqueueSnackbar(`Add ${role} Role Successfully`, {
+        //       variant: "success",
+        //     });
+        //   })
+        //   .catch((error) => {
+        //     enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
+        //   });
+        try {
+          const response = await userApi.addRoles(id, role);
+          if (response.data) {
+            enqueueSnackbar(`Add ${role} Role Successfully`, {
+              variant: "success",
+            });
+          } else {
+            enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
+          }
+        } catch (error) {
+          enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
+        }
+      }, 1000);
+    });
+    rolesChecked = [];
+  };
 
+  const addUser = async (event) => {
     const body = {
       username,
       fullName,
@@ -144,24 +255,7 @@ const EditUserForm = (props) => {
       password,
     };
 
-    const signUp = async () => {
-      try {
-        await userApi.signUp(body);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    const addRoles = async() => {
-      try {
-        await userApi.addRoles(body);
-      } catch (error){
-        console.log(error);
-      }
-    }
-
-    signUp();
-    // addRoles();
+    signUp(body);
   };
 
   const handleConfirmPassword = () => {
@@ -207,6 +301,19 @@ const EditUserForm = (props) => {
     return true;
   }
 
+  const init = () => {
+    // setUsername(data?.userName | "");
+    // setEmail(data?.userName | "");
+    // setFullName(data?.userName | "");
+    // setPassword(data?.password | "");
+    // setConfirmPassword(data?.password | "");
+  };
+
+  useEffect(() => {
+    console.log(props);
+  }, []);
+
+  console.log(data);
   return (
     <Box
       component="form"
@@ -243,7 +350,7 @@ const EditUserForm = (props) => {
               fullWidth
               onChange={(event) => {
                 const value = event.target.value;
-                setUsername(value);
+                // setObjEdit(value);
               }}
             />
 
@@ -258,7 +365,7 @@ const EditUserForm = (props) => {
               helperText={fullNameError}
               onChange={(event) => {
                 const value = event.target.value;
-                setFullName(value);
+                // setFullName(value);
               }}
             />
 
@@ -266,29 +373,29 @@ const EditUserForm = (props) => {
               id="email"
               label="Email"
               type="email"
-              value={email}
               required
               fullWidth
+              value={email}
               error={emailError !== " "}
               helperText={emailError}
               onChange={(event) => {
                 const value = event.target.value;
-                setEmail(value);
+                // setEmail(value);
               }}
             />
-
+{/* 
             <TextField
               id="password"
               label="Password"
               type="password"
-              value={password}
               required
               fullWidth
+              value={password}
               error={passwordError !== " "}
               helperText={passwordError}
               onChange={(event) => {
                 const value = event.target.value;
-                setPassword(value);
+                // setPassword(value);
               }}
             />
 
@@ -296,7 +403,6 @@ const EditUserForm = (props) => {
               id="confirmPassword"
               label="Confirm Password"
               type="password"
-              value={confirmPassword}
               error={isPasswordNotMatch}
               required
               fullWidth
@@ -307,7 +413,7 @@ const EditUserForm = (props) => {
                 handleConfirmPassword();
               }}
               onFocus={handleConfirmPassword}
-            />
+            /> */}
 
             <FormLabel
               component="legend"
@@ -316,20 +422,7 @@ const EditUserForm = (props) => {
               Pick Roles *
             </FormLabel>
             <FormGroup className="d-flex flex-row justify-content-evenly">
-              <FormControlLabel
-                control={
-                  <Checkbox onChange={handleViewerChange} defaultChecked />
-                }
-                label="Viewer"
-              />
-              <FormControlLabel
-                control={<Checkbox onChange={handleCreatorChange} />}
-                label="Creator"
-              />
-              <FormControlLabel
-                control={<Checkbox onChange={handleUploaderChange} />}
-                label="Uploader"
-              />
+              <RoleCheckbox selectRole={selectRole} />
             </FormGroup>
           </Box>
         </DialogContent>
@@ -342,4 +435,4 @@ const EditUserForm = (props) => {
   );
 };
 
-export default EditUserForm;
+export default UserForm;

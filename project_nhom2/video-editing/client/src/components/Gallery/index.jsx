@@ -159,20 +159,24 @@ function Gallery() {
   };
 
   const onDelete = (id) => {
-    const deleteGallery = async () => {
-      try {
-        await videoEditingApi.deleteGallery(id);
-        getGallery();
-        setNoti(true);
-        setMessage("Delete Succeed");
-        setTypeNoti("success");
-      } catch (error) {
-        setNoti(true);
-        setMessage(error.response.data.description);
-        setTypeNoti("error");
-      }
-    };
-    deleteGallery();
+    if(authRoles.includes(ROLE_WRITE)){
+      const deleteGallery = async () => {
+        try {
+          await videoEditingApi.deleteGallery(id);
+          getGallery();
+          setNoti(true);
+          setMessage("Delete Succeed");
+          setTypeNoti("success");
+        } catch (error) {
+          setNoti(true);
+          setMessage(error.response.data.description);
+          setTypeNoti("error");
+        }
+      };
+      deleteGallery();
+    } else {
+      setAuthDialog({open: true});
+    }
   };
   return (
     <>

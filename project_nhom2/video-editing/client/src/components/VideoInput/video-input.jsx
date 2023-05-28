@@ -376,7 +376,11 @@ const VideoInput = () => {
   };
 
   const downloadNoMerge = (files) => {
-    download_files(files);
+    if(authRoles.includes(ROLE_EXCUTE)){
+      download_files(files);
+    } else {
+      setAuthDialog({open: true});
+    }
   };
 
   function download_files(files) {
@@ -555,10 +559,14 @@ const VideoInput = () => {
   };
 
   const handleIconRemoveEventClick = (row) => {
-    const temp = [...filtered];
-    const afterRemove = temp.filter((item) => item.file_name !== row.file_name);
+    if(authRoles.includes(ROLE_WRITE)){
+      const temp = [...filtered];
+      const afterRemove = temp.filter((item) => item.file_name !== row.file_name);
+      setFiltered(afterRemove);
+    } else {
+      setAuthDialog({open: true});
+    }
 
-    setFiltered(afterRemove);
   };
 
   const onTrack = (lg, newPos) => {

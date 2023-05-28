@@ -30,8 +30,7 @@ import UserForm from "./UserForm";
 import EditUserForm from "./EditUserForm";
 import { UserContext } from "./user";
 import { SnackbarProvider, useSnackbar } from "notistack";
-import Moment from 'react-moment';
-
+import Moment from "react-moment";
 
 function converDateTime(currentTime) {
   const dateTime = new Date(currentTime);
@@ -187,14 +186,14 @@ function EnhancedTableToolbar(props) {
   const { numSelected, selected } = props;
 
   const handleDeleteAll = (event) => {
-    if(selected) {
+    if (selected) {
       selected.forEach((item) => {
         userApi.deleteUser(item.id);
-      })
-      enqueueSnackbar('Detele All Successfully', {variant: 'success'});
+      });
+      enqueueSnackbar("Detele All Successfully", { variant: "success" });
       window.location.reload(false);
     }
-  }
+  };
 
   return (
     <Toolbar
@@ -262,29 +261,47 @@ export default function EnhancedTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [numbers, setNumbers] = React.useState([]);
   const [open, setOpen] = React.useState(false);
-  const [objEdit, setObjEdit] = React.useState();
+  const [objEdit, setObjEdit] = React.useState(() => {
+    const obj = {
+      userName: "",
+      fullName: "",
+      email: "",
+      password: "",
+      role: [],
+    };
+    return obj;
+  });
   const { enqueueSnackbar } = useSnackbar();
 
   const handleEdit = (obj, event) => {
     setOpen(true);
-    setObjEdit(obj);
+    setObjEdit(() => {
+      const newObj = {
+        userName: obj.userName,
+        fullName: obj.fullName,
+        email: obj.email,
+        password: obj.password,
+        role: obj.roles,
+      };
+      return newObj;
+    });
   };
 
   const handleDelete = async (obj, event) => {
     const res = await userApi.deleteUser(obj.id);
     try {
-      if(res.data) {
+      if (res.data) {
         enqueueSnackbar(res.data, { variant: "success" });
         await window.location.reload(false);
       } else {
-        if(res.description){
-          enqueueSnackbar(res.description, { variant: 'error' });
+        if (res.description) {
+          enqueueSnackbar(res.description, { variant: "error" });
         } else {
-          enqueueSnackbar('Delete Failed', { variant: 'error' });
+          enqueueSnackbar("Delete Failed", { variant: "error" });
         }
-      } 
+      }
     } catch {
-      enqueueSnackbar('Delete Failed, Try again', { variant: 'error' });
+      enqueueSnackbar("Delete Failed, Try again", { variant: "error" });
     }
   };
 
@@ -380,14 +397,16 @@ export default function EnhancedTable(props) {
     [order, orderBy, page, rowsPerPage]
   );
 
-  init()
-  useEffect(() => {
-  })
+  init();
+  useEffect(() => {});
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected}/>
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          selected={selected}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -427,8 +446,18 @@ export default function EnhancedTable(props) {
                         onClick={(event) => handleClick(event, row)}
                       />
                     </TableCell>
-                    <TableCell align="right" onClick={(event) => handleClick(event, row)}>{index}</TableCell>
-                    <TableCell align="right" onClick={(event) => handleClick(event, row)}><Moment format="YYYY/MM/DD hh:mm">{row.createOn}</Moment></TableCell>
+                    <TableCell
+                      align="right"
+                      onClick={(event) => handleClick(event, row)}
+                    >
+                      {index}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      onClick={(event) => handleClick(event, row)}
+                    >
+                      <Moment format="YYYY/MM/DD hh:mm">{row.createOn}</Moment>
+                    </TableCell>
                     <TableCell
                       align="right"
                       component="th"
@@ -439,20 +468,54 @@ export default function EnhancedTable(props) {
                     >
                       {row.userName}
                     </TableCell>
-                    <TableCell align="right" onClick={(event) => handleClick(event, row)}>{row.fullName}</TableCell>
-                    <TableCell align="right" onClick={(event) => handleClick(event, row)}>{row.email}</TableCell>
-                    <TableCell align="right" onClick={(event) => handleClick(event, row)}>{row.roles}</TableCell>
+                    <TableCell
+                      align="right"
+                      onClick={(event) => handleClick(event, row)}
+                    >
+                      {row.fullName}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      onClick={(event) => handleClick(event, row)}
+                    >
+                      {row.email}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      onClick={(event) => handleClick(event, row)}
+                    >
+                      {row.roles}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      hidden
+                      onClick={(event) => handleClick(event, row)}
+                    >
+                      {row.password}
+                    </TableCell>
                     <TableCell
                       align="right"
                       className="d-flex justify-content-end"
                     >
-                      <IconButton aria-label="delete" color="primary" onClick={(event) => handleDelete(row, event)}>
+                      <IconButton
+                        aria-label="delete"
+                        color="primary"
+                        onClick={(event) => handleDelete(row, event)}
+                      >
                         <DeleteIcon />
                       </IconButton>
-                      <IconButton aria-label="edit" color="primary" onClick={(event) => handleEdit(row, event)}>
+                      <IconButton
+                        aria-label="edit"
+                        color="primary"
+                        onClick={(event) => handleEdit(row, event)}
+                      >
                         <BorderColorIcon />
                       </IconButton>
-                      <IconButton aria-label="addRoles" color="primary" onClick={(event) => handleAssnignRoles(row, event)}>
+                      <IconButton
+                        aria-label="addRoles"
+                        color="primary"
+                        onClick={(event) => handleAssnignRoles(row, event)}
+                      >
                         <AssignmentIndIcon />
                       </IconButton>
                     </TableCell>
@@ -486,8 +549,19 @@ export default function EnhancedTable(props) {
         label="Dense padding"
       />
 
-    <EditUserForm data={objEdit} openDialog={open} setOpenDialog={setOpen} title='Edit User' txtBtn='Edit'/>
-
+      <EditUserForm
+        data={objEdit}
+        setData={setObjEdit}
+        openDialog={open}
+        setOpenDialog={setOpen}
+        title="Edit User"
+        txtBtn="Edit"
+        username={objEdit.userName}
+        fullName={objEdit.fullName}
+        email={objEdit.email}
+        password={objEdit.password}
+        roles={objEdit.roles}
+      />
     </Box>
   );
 }
