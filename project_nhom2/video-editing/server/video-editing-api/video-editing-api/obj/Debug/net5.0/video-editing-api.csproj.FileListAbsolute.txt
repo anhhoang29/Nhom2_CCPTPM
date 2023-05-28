@@ -68,3 +68,5 @@ D:\hk2nam3\cong cu\project\v2\Nhom2_CCPTPM\project_nhom2\video-editing\server\vi
 D:\hk2nam3\cong cu\project\v2\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.pdb
 D:\hk2nam3\cong cu\project\v2\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\video-editing-api.genruntimeconfig.cache
 D:\hk2nam3\cong cu\project\v2\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\obj\Debug\net5.0\ref\video-editing-api.dll
+D:\hk2nam3\cong cu\project\v2\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\hk2nam3\cong cu\project\v2\Nhom2_CCPTPM\project_nhom2\video-editing\server\video-editing-api\video-editing-api\bin\Debug\net5.0\System.Linq.Async.Queryable.dll

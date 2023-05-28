@@ -35,22 +35,16 @@ namespace video_editing_api.Controllers
         {
             try
             {
-                var roles = _roleManager.Roles.ToAsyncEnumerable();
+                var roles = _roleManager.Roles.ToList();
 
-                List<string> roleNames = new List<string>();
-
-                await foreach (var role in roles)
+                if (roles != null && roles.Count > 0)
                 {
-                    roleNames.Add(role.Name);
-                }
-
-                if (roleNames != null && roleNames.Count > 0)
-                {
-                    return Ok(new Response<List<string>>(200, "", roleNames));
+                    var roleList = roles.Select(r => new AppRole { Id = r.Id, Name = r.Name }).ToList();
+                    return Ok(new Response<List<AppRole>>(200, "", roleList));
                 }
                 else
                 {
-                    return Ok(new Response<List<string>>(200, "", new List<string>()));
+                    return Ok(new Response<List<AppRole>>(200, "", new List<AppRole>()));
                 }
             }
             catch (Exception e)
