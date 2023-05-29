@@ -29,7 +29,6 @@ const User = () => {
   const getUsers = async () => {
     let response = await userApi.getAllUser();
     dataValue = response.data;
-    console.log("data:");
     setUsers(dataValue);
   };
   
@@ -49,35 +48,6 @@ const User = () => {
     // variant could be success, error, warning, info, or default
     enqueueSnackbar("This is a success message!", { variant });
   };
-  //const [selectedUser, setSelectedUser] = React.useState(null);
-
-  // const getUsers = useCallback (() => {
-  //   try {
-  //     userApi.getAllUser().then((response) => {
-  //       setUsers(response.data);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
-  // const User = () => {
-  //   const [users, setUsers] = useState([]);
-    
-  //   const getUsers = useCallback(() => {
-  //     userApi.getAllUser().then(setUsers);
-  //   }, []);
-    
-  //   const handleClick = () => {
-  //     getUsers();
-  //   }
-    
-  //   return (
-  //     <button onClick={handleClick}>Load Users</button> 
-  //     {users.map(user => (
-  //       <p key={user.id}>{user.name}</p>  
-  //     ))}   
-  //   )
-  // };
 
   // GET TABLE USER
   useEffect(() => {
@@ -90,15 +60,6 @@ const User = () => {
         <div className="d-flex justify-content-between mb-4">
           <h2>User Manager</h2>
           <div className="list-btn">
-            <Button
-              variant="outlined"
-              className="ms-3 button"
-              onClick={handleClickDelete}
-              startIcon={<DeleteIcon />}
-            >
-              Delete
-            </Button>
-
             <Button
               variant="contained"
               className="ms-3 button"

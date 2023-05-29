@@ -9,6 +9,10 @@ const userApi = {
     const url = "/Users/SignUp";
     return axiosClient.post(url, body);
   },
+  update: async (username, body) => {
+    const url = `/Users/update/${username}`;
+    return axiosClient.put(url, body);
+  },
   forgotPassword: (body) => {
     const url = "/Users/ForgotPassword";
     return axiosClient.post(url, body);

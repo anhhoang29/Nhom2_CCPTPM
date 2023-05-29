@@ -8,9 +8,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import FormGroup from "@mui/material/FormGroup";
+import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import FormLabel from "@mui/material/FormLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControl from "@mui/material/FormControl";
 import "./user.css";
 import { userApi } from "../../api";
 import { SnackbarProvider, useSnackbar } from "notistack";
@@ -23,12 +26,12 @@ const getAllRolesNotAdmin = async () => {
 
   try {
     const res = await roleApi.getAll();
-    roles = res.data;
+    roles = res.data.map(i => i.name);
   } catch (error) {
     console.log(error);
   }
   const rolesNotAdmin = roles.filter(
-    (item) => item !== ROLE_ADMIN && item !== ROLE_READ
+    (item) => item !== ROLE_ADMIN
   );
   return rolesNotAdmin;
 };
@@ -36,45 +39,6 @@ const getAllRolesNotAdmin = async () => {
 const rolesApi = await getAllRolesNotAdmin();
 
 var rolesChecked = [];
-
-const RoleCheckbox = ({ selectRole }) => {
-  let roleCheckbox = [];
-  selectRole = [];
-  const handleChangeCheckbox = (event) => {
-    console.log("checkbox change", event);
-    if (event.target.checked) {
-      rolesChecked.push(event.target.name);
-      selectRole.push(event.target.name);
-    } else {
-      const index = rolesChecked.indexOf(event.target.name);
-      if (index !== -1) {
-        rolesChecked.splice(index, 1);
-        selectRole.splice(index, 1);
-      }
-      // setRoles(roles.filter(role => role !== event.target.name));
-    }
-    console.log(rolesChecked);
-  };
-
-  rolesApi.forEach((roleName) => {
-    const form = (
-      <FormControlLabel
-        control={
-          <Checkbox
-            onChange={handleChangeCheckbox}
-            name={roleName}
-            value={roleName}
-          />
-        }
-        label={roleName}
-        value={roleName}
-        sx={{ color: "#000" }}
-      />
-    );
-    roleCheckbox.push(form);
-  });
-  return roleCheckbox;
-};
 
 const UserForm = (props) => {
   const {
@@ -85,29 +49,18 @@ const UserForm = (props) => {
     username,
     fullName,
     email,
-    password,
-    roles,
+    role,
+    setObjEdit,
+    submitEdit
   } = props;
-  let selectRole = [];
-  // let formTitle = "Add User";
-  // let formButtonText = "Add";..
 
   const formCancelButtonText = "Cancel";
   const wrongPassword = "Password does not match";
   // set Title:
   const [formTitle, setFormTitle] = React.useState(title);
   const [formButtonText, setFormButtonText] = React.useState(txtBtn);
-  // const [username, setUsername] = React.useState(props.data?.userName | '');
-  // const [fullName, setFullName] = React.useState();
-  // const [email, setEmail] = React.useState();
-  // const [roles, setRoles] = React.useState([]);
-  const [viewer, setViewer] = React.useState(true);
-  const [creator, setCreator] = React.useState(false);
-  const [uploader, setUploader] = React.useState(false);
 
-  // const [password, setPassword] = React.useState("");
-  const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [isPasswordNotMatch, setIsPasswordNotMatch] = React.useState(false);
+
   const strEmpty = "Empty field!";
 
   const [usernameError, setUsernameError] = React.useState(" ");
@@ -115,31 +68,12 @@ const UserForm = (props) => {
   const [emailError, setEmailError] = React.useState(" ");
   const [passwordError, setPasswordError] = React.useState(" ");
   const { enqueueSnackbar } = useSnackbar();
+  const [selectRole, setSelectRole] = React.useState([]);
 
-  // Role: start
-  const handleViewerChange = (event) => {
-    setViewer(event.target.checked);
-  };
-
-  const handleCreatorChange = (event) => {
-    setCreator(event.target.checked);
-  };
-
-  const handleUploaderChange = (event) => {
-    setUploader(event.target.checked);
-  };
-
-  const rolesError = [viewer, creator, uploader].filter((v) => v).length < 1;
-  // Role: end
+  const [rolesError, setRolesError] = React.useState(false);
 
   const handleClose = () => {
     props.setOpenDialog(false);
-    setIsPasswordNotMatch(false);
-    // setUsername("");
-    // setFullName("");
-    // setEmail("");
-    // setPassword("");
-    // setConfirmPassword("");
   };
 
   const isEmpty = (str) => {
@@ -147,10 +81,16 @@ const UserForm = (props) => {
   };
 
   const handleSubmit = (event) => {
-    console.log(event);
     if (isValidate()) {
-      // handleClose();
-      addUser(event);
+      console.log('isValidate');
+      props.setObjEdit((preValue) => ({
+        ...preValue,
+        username,
+        fullName,
+        email,
+        role: selectRole,
+      }))
+      props.submitEdit();
     }
   };
 
@@ -172,148 +112,42 @@ const UserForm = (props) => {
       isError = true;
     }
 
-    const pwError = {
-      message: " ",
-    };
-    if (!validatePassword(password, pwError)) {
-      setPasswordError(pwError.message);
+    if(role.length === 0) {
       isError = true;
+      setRolesError(true);
     }
 
     return !isError;
   };
 
-  const signUp = async (body) => {
-    // try {
-    //   const response = await userApi.signUp(body);
-    //   if (response.data) {
-    //     await addRoles(response.data.id);
-    //     enqueueSnackbar("Create a successful user", { variant: "success" });
-    //   } else {
-    //     if (response.description) {
-    //       enqueueSnackbar(response.description, { variant: "error" });
-    //     } else {
-    //       enqueueSnackbar("Add User Faild", { variant: "error" });
-    //     }
-    //   }
-    // } catch (error) {
-    //   enqueueSnackbar(error.message, { variant: "error" });
-    // }
-    userApi
-      .signUp(body)
-      .then((res) => {
-        if (res.data) {
-          enqueueSnackbar("Create a successful user", { variant: "success" });
-          setTimeout(() => {
-            addRoles(res.data.id);
-          }, 1500);
-          props.setOpenDialog(false);
-          window.location.reload(false);
-        }
-      })
-      .catch((error) => {
-        enqueueSnackbar(error.message, { variant: "error" });
-      })
-      .finally(() => {});
+  const handleSelectRole = (event) => {
+    const newRole = [event.target.value];
+    setObjEdit((preValue) => ({
+      ...preValue,
+      role: newRole,
+    }))
   };
 
-  const addRoles = async (id) => {
-    rolesChecked.forEach(async (role) => {
-      setTimeout(async () => {
-        // userApi
-        //   .addRoles(id, role)
-        //   .then((res) => {
-        //     enqueueSnackbar(`Add ${role} Role Successfully`, {
-        //       variant: "success",
-        //     });
-        //   })
-        //   .catch((error) => {
-        //     enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
-        //   });
-        try {
-          const response = await userApi.addRoles(id, role);
-          if (response.data) {
-            enqueueSnackbar(`Add ${role} Role Successfully`, {
-              variant: "success",
-            });
-          } else {
-            enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
-          }
-        } catch (error) {
-          enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
-        }
-      }, 1000);
+  const FormControlLabelRoles = ({ selectRole }) => {
+    let radios = [];
+    rolesApi.forEach((role) => {
+      const radio = (
+        <FormControlLabel
+          value={role}
+          control={<Radio />}
+          label={role}
+          sx={{ color: "#000" }}
+        />
+      );
+      radios.push(radio);
     });
-    rolesChecked = [];
-  };
 
-  const addUser = async (event) => {
-    const body = {
-      username,
-      fullName,
-      email,
-      password,
-    };
-
-    signUp(body);
-  };
-
-  const handleConfirmPassword = () => {
-    if (password !== confirmPassword) {
-      setIsPasswordNotMatch(true);
-    } else {
-      setIsPasswordNotMatch(false);
-    }
-  };
-
-  function validatePassword(password, pwError) {
-    // Check if the password is at least 8 characters long
-    if (password.length < 8) {
-      pwError.message = "Password must be at least 8 characters";
-      return false;
-    }
-
-    // Check if the password contains at least one uppercase letter
-    if (!/[A-Z]/.test(password)) {
-      pwError.message = "Password must contain uppercase letters";
-      return false;
-    }
-
-    // Check if the password contains at least one lowercase letter
-    if (!/[a-z]/.test(password)) {
-      pwError.message = "Password must contain lowercase letters";
-      return false;
-    }
-
-    // Check if the password contains at least one digit
-    if (!/[0-9]/.test(password)) {
-      pwError.message = "Password must contain numbers";
-      return false;
-    }
-
-    // Check if the password contains at least one special character
-    if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
-      pwError.message = "Password must contain spacial characters";
-      return false;
-    }
-
-    // All requirements are met
-    return true;
-  }
-
-  const init = () => {
-    // setUsername(data?.userName | "");
-    // setEmail(data?.userName | "");
-    // setFullName(data?.userName | "");
-    // setPassword(data?.password | "");
-    // setConfirmPassword(data?.password | "");
+    return radios;
   };
 
   useEffect(() => {
-    console.log(props);
   }, []);
 
-  console.log(data);
   return (
     <Box
       component="form"
@@ -343,15 +177,12 @@ const UserForm = (props) => {
               id="username"
               label="Username"
               type="text"
+              disabled
               value={username}
               error={usernameError !== " "}
               helperText={usernameError}
               required
               fullWidth
-              onChange={(event) => {
-                const value = event.target.value;
-                // setObjEdit(value);
-              }}
             />
 
             <TextField
@@ -364,8 +195,10 @@ const UserForm = (props) => {
               error={fullNameError !== " "}
               helperText={fullNameError}
               onChange={(event) => {
-                const value = event.target.value;
-                // setFullName(value);
+                setObjEdit((preValue) => ({
+                  ...preValue,
+                  fullName: event.target.value,
+                }))
               }}
             />
 
@@ -379,8 +212,10 @@ const UserForm = (props) => {
               error={emailError !== " "}
               helperText={emailError}
               onChange={(event) => {
-                const value = event.target.value;
-                // setEmail(value);
+                setObjEdit((preValue) => ({
+                  ...preValue,
+                  email: event.target.value,
+                }))
               }}
             />
 {/* 
@@ -414,15 +249,26 @@ const UserForm = (props) => {
               }}
               onFocus={handleConfirmPassword}
             /> */}
-
-            <FormLabel
-              component="legend"
-              className={(rolesError ? "textError" : "") + "mt-2"}
-            >
-              Pick Roles *
-            </FormLabel>
-            <FormGroup className="d-flex flex-row justify-content-evenly">
-              <RoleCheckbox selectRole={selectRole} />
+            <FormGroup>
+              <FormControl>
+                <FormLabel
+                  id="demo-radio-buttons-group-label"
+                  className={(rolesError ? "textError" : "") + "mt-2"}
+                >
+                  Pick Role*
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group"
+                  value={role}
+                  onChange={handleSelectRole}
+                  sx={{ color: "#000" }}
+                  className="d-flex flex-row justify-content-evenly"
+                >
+                  <FormControlLabelRoles />
+                </RadioGroup>
+              </FormControl>
             </FormGroup>
           </Box>
         </DialogContent>

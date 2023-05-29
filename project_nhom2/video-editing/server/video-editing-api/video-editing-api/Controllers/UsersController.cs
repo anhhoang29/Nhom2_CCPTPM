@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-//using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -58,31 +58,28 @@ namespace video_editing_api.Controllers
                 {
                     UserName = account.Username,
                     Email = account.Email,
-                    FullName = account.FullName,
-                    Role = string.IsNullOrEmpty(account.Role) || (account.Role != "Read" && account.Role != "Write" && account.Role != "Excute") ? "Read" : account.Role
+                    FullName = account.FullName
                 };
 
                 var res = await _userManager.CreateAsync(user, account.Password);
                 if (res.Succeeded)
                 {
-                    // Assign the role based on user input
-                    if (account.Role == "Read")
+                    // Assign the roles based on user input or default to "Read"
+                    var rolesToAdd = new List<string>();
+                    if (account.Roles != null && account.Roles.Any())
                     {
-                        await _userManager.AddToRoleAsync(user, "Read");
+                        // Validate Role input
+                        var validRoles = new List<string> { Role.Read, Role.Write, Role.Excute, Role.Admin };
+                        rolesToAdd = account.Roles.Where(role => validRoles.Contains(role)).ToList();
                     }
-                    else if (account.Role == "Write")
+                    if (!rolesToAdd.Any())
                     {
-                        await _userManager.AddToRoleAsync(user, "Write");
+                        rolesToAdd.Add(Role.Read);
                     }
-                    else if (account.Role == "Excute")
-                    {
-                        await _userManager.AddToRoleAsync(user, "Excute");
-                    }
-                    else
-                    {
-                        // If no role is specified, assign the "Read" role by default
-                        await _userManager.AddToRoleAsync(user, "Read");
-                    }
+
+                    // Add the specified roles to the user
+                    await _userManager.AddToRolesAsync(user, rolesToAdd);
+
 
                     // Retrieve the user information from the database
                     var newUser = await _userManager.FindByNameAsync(account.Username);
@@ -94,7 +91,7 @@ namespace video_editing_api.Controllers
                         UserName = newUser.UserName,
                         Email = newUser.Email,
                         FullName = newUser.FullName,
-                        Role = newUser.Role
+                        Roles = await _userManager.GetRolesAsync(newUser)
                     };
 
                     // Return this object as the response from the SignUp method
@@ -194,56 +191,6 @@ namespace video_editing_api.Controllers
             }
 
         }
-        //[HttpGet("GetAllUsers")]
-        //public async Task<IActionResult> GetAllUsers()
-        //{
-        //    try
-        //    {
-        //        var users = _userManager.Users.ToList();
-        //        var response = new Response<List<AppUser>>(200, "", users);
-        //        return Ok(response);
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        return BadRequest(new Response<string>(400, e.Message, null));
-        //    }
-        //}
-        //[HttpGet("GetAllUsers")]
-        //public async Task<IActionResult> GetAllUsers()
-        //{
-        //    try
-        //    {
-        //        var usersWithRoles = await GetUsersWithRoles();
-
-        //        var response = new Response<List<object>>(200, "", usersWithRoles);
-        //        return Ok(response);
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        return BadRequest(new Response<string>(400, e.Message, null));
-        //    }
-        //}
-
-        //private async Task<List<object>> GetUsersWithRoles()
-        //{
-        //    var users = await _userManager.Users.ToListAsync();
-        //    var usersWithRoles = new List<object>();
-
-        //    foreach (var user in users)
-        //    {
-        //        var roles = await _userManager.GetRolesAsync(user);
-        //        usersWithRoles.Add(new
-        //        {
-        //            user.Id,
-        //            user.UserName,
-        //            user.Email,
-        //            user.FullName,
-        //            RoleNames = roles // thêm thuộc tính RoleNames chứa tên các role
-        //        });
-        //    }
-
-        //    return usersWithRoles;
-        //}
         [HttpGet("GetAllUsers")]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -337,56 +284,7 @@ namespace video_editing_api.Controllers
                 return BadRequest(new Response<string>(400, e.Message, null));
             }
         }
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateUser(string id, AccountModel account)
-        //{
-        //    try
-        //    {
-        //        var user = await _userManager.FindByIdAsync(id);
-        //        if (user == null)
-        //        {
-        //            return NotFound(new Response<string>(404, "User not found", null));
-        //        }
-
-        //        user.UserName = account.Username;
-        //        user.Email = account.Email;
-        //        user.FullName = account.FullName;
-        //        user.Role = account.Role;
-
-        //        var res = await _userManager.UpdateAsync(user);
-        //        if (res.Succeeded)
-        //        {
-        //            //// Assign the role based on user input
-        //            //if (account.Role == "Read")
-        //            //{
-        //            //    await _userManager.AddToRoleAsync(user, "Read");
-        //            //}
-        //            //else if (account.Role == "Write")
-        //            //{
-        //            //    await _userManager.AddToRoleAsync(user, "Write");
-        //            //}
-        //            //else if (account.Role == "Excute")
-        //            //{
-        //            //    await _userManager.AddToRoleAsync(user, "Excute");
-        //            //}
-        //            //else
-        //            //{
-        //            //    // If no role is specified, assign the "Read" role by default
-        //            //    await _userManager.AddToRoleAsync(user, "Read");
-        //            //}
-
-        //            return Ok(new Response<string>(200, "", "User information updated successfully"));
-        //        }
-        //        else
-        //        {
-        //            return BadRequest(new Response<string>(400, "An unknown error occurred, please try again.", null));
-        //        }
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        return BadRequest(new Response<string>(400, e.Message, null));
-        //    }
-        //}
+        
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(string id, AccountModel account)
@@ -399,47 +297,31 @@ namespace video_editing_api.Controllers
                     return NotFound(new Response<string>(404, "User not found", null));
                 }
 
+                // Update user information
                 user.UserName = account.Username;
                 user.Email = account.Email;
                 user.FullName = account.FullName;
-                user.Role = account.Role;
 
-                if (!string.IsNullOrEmpty(account.Role))
+                // Update user roles
+                if (account.Roles != null && account.Roles.Any())
                 {
                     // Validate Role input
-                    var validRoles = new List<string> { "Read", "Write", "Excute" };
-                    if (!validRoles.Contains(account.Role))
+                    var validRoles = new List<string> { Role.Read, Role.Write, Role.Excute, Role.Admin };
+                    if (account.Roles.Any(role => !validRoles.Contains(role)))
                     {
                         return BadRequest(new Response<string>(400, "Invalid role", null));
                     }
-                    // Remove all existing roles and assign new role to the user
+                    // Remove all existing roles and assign new roles to the user
                     var currentRoles = await _userManager.GetRolesAsync(user);
                     var removeRoles = await _userManager.RemoveFromRolesAsync(user, currentRoles);
-                    var addRole = await _userManager.AddToRoleAsync(user, account.Role);
+                    var addRoles = await _userManager.AddToRolesAsync(user, account.Roles);
                 }
 
+                // Save changes to the database
                 var res = await _userManager.UpdateAsync(user);
                 if (res.Succeeded)
                 {
-                    // Assign the role based on user input
-                    if (account.Role == "Read")
-                    {
-                        await _userManager.AddToRoleAsync(user, "Read");
-                    }
-                    else if (account.Role == "Write")
-                    {
-                        await _userManager.AddToRoleAsync(user, "Write");
-                    }
-                    else if (account.Role == "Excute")
-                    {
-                        await _userManager.AddToRoleAsync(user, "Excute");
-                    }
-                    else
-                    {
-                        // If no role is specified, assign the "Read" role by default
-                        await _userManager.AddToRoleAsync(user, "Read");
-                    }
-                    return Ok(new Response<string>(200, "", "User information updatedsuccessfully"));
+                    return Ok(new Response<string>(200, "", "User information and roles updated successfully"));
                 }
                 else
                 {
@@ -452,8 +334,8 @@ namespace video_editing_api.Controllers
             }
         }
         // update dựa trên username
-        [HttpPut("{username}")]
-        public async Task<IActionResult> _UpdateUser(string username, AccountModel account)
+        [HttpPut("update/{username}")]
+        public async Task<IActionResult> UpdateUserWithUserName(string username, AccountModel account)
         {
             try
             {
@@ -463,27 +345,29 @@ namespace video_editing_api.Controllers
                     return NotFound(new Response<string>(404, "User not found", null));
                 }
 
+                // Update user information
                 user.Email = account.Email;
                 user.FullName = account.FullName;
 
-                if (!string.IsNullOrEmpty(account.Role))
+                // Update user roles
+                if (account.Roles != null && account.Roles.Any())
                 {
                     // Validate Role input
-                    var validRoles = new List<string> { "Read", "Write", "Excute" };
-                    if (!validRoles.Contains(account.Role))
+                    var validRoles = new List<string> { Role.Read, Role.Write, Role.Excute, Role.Admin };
+                    if (account.Roles.Any(role => !validRoles.Contains(role)))
                     {
                         return BadRequest(new Response<string>(400, "Invalid role", null));
                     }
-                    // Remove all existing roles and assign new role to the user
+                    // Remove all existing roles and assign new roles to the user
                     var currentRoles = await _userManager.GetRolesAsync(user);
                     var removeRoles = await _userManager.RemoveFromRolesAsync(user, currentRoles);
-                    var addRole = await _userManager.AddToRoleAsync(user, account.Role);
+                    var addRoles = await _userManager.AddToRolesAsync(user, account.Roles);
                 }
-
+                // Save changes to the database
                 var res = await _userManager.UpdateAsync(user);
                 if (res.Succeeded)
                 {
-                    return Ok(new Response<string>(200, "", "User information updated successfully"));
+                    return Ok(new Response<string>(200, "", "User information and roles updated successfully"));
                 }
                 else
                 {
@@ -495,51 +379,7 @@ namespace video_editing_api.Controllers
                 return BadRequest(new Response<string>(400, e.Message, null));
             }
         }
-        //[HttpPut("{username}")]
-        //public async Task<IActionResult> UpdateUserWithRoles(string username, AccountModel account)
-        //{
-        //    try
-        //    {
-        //        var user = await _userManager.FindByNameAsync(username);
-        //        if (user == null)
-        //        {
-        //            return NotFound(new Response<string>(404, "User not found", null));
-        //        }
 
-        //        // Update email and full name
-        //        user.Email = account.Email;
-        //        user.FullName = account.FullName;
 
-        //        // Update roles
-        //        if (account.Roles != null && account.Roles.Any())
-        //        {
-        //            // Validate roles
-        //            var validRoles = new List<string> { "Read", "Write", "Excute" };
-        //            if (!account.Roles.All(r => validRoles.Contains(r)))
-        //            {
-        //                return BadRequest(new Response<string>(400, "Invalid role", null));
-        //            }
-
-        //            // Remove all existing roles and assign new roles to the user
-        //            var currentRoles = await _userManager.GetRolesAsync(user);
-        //            var removeRoles = await _userManager.RemoveFromRolesAsync(user, currentRoles);
-        //            var addRoles = await _userManager.AddToRolesAsync(user, account.Roles);
-        //        }
-
-        //        var res = await _userManager.UpdateAsync(user);
-        //        if (res.Succeeded)
-        //        {
-        //            return Ok(new Response<string>(200, "", "User information updated successfully"));
-        //        }
-        //        else
-        //        {
-        //            return BadRequest(new Response<string>(400, "An unknown error occurred, please try again.", null));
-        //        }
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        return BadRequest(new Response<string>(400, e.Message, null));
-        //    }
-        //}
     }
 }

@@ -478,6 +478,19 @@
           }
         }
       },
+      "Microsoft.Bcl.AsyncInterfaces/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.CSharp/4.7.0": {
         "type": "package",
         "compile": {
@@ -1655,6 +1668,22 @@
         },
         "runtime": {
           "lib/netstandard2.1/System.Linq.Async.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "System.Linq.Async.Queryable/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "System.Linq.Async": "6.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.1/System.Linq.Async.Queryable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/System.Linq.Async.Queryable.dll": {
             "related": ".xml"
           }
         }
@@ -2975,6 +3004,29 @@
         "lib/netstandard1.3/Microsoft.AspNetCore.WebUtilities.xml",
         "microsoft.aspnetcore.webutilities.1.0.0.nupkg.sha512",
         "microsoft.aspnetcore.webutilities.nuspec"
+      ]
+    },
+    "Microsoft.Bcl.AsyncInterfaces/7.0.0": {
+      "sha512": "3aeMZ1N0lJoSyzqiP03hqemtb1BijhsJADdobn/4nsMJ8V1H+CrpuduUe4hlRdx+ikBQju1VGjMD1GJ3Sk05Eg==",
+      "type": "package",
+      "path": "microsoft.bcl.asyncinterfaces/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Bcl.AsyncInterfaces.targets",
+        "buildTransitive/net462/_._",
+        "lib/net462/Microsoft.Bcl.AsyncInterfaces.dll",
+        "lib/net462/Microsoft.Bcl.AsyncInterfaces.xml",
+        "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll",
+        "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.xml",
+        "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll",
+        "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml",
+        "microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
+        "microsoft.bcl.asyncinterfaces.nuspec",
+        "useSharedDesignerContext.txt"
       ]
     },
     "Microsoft.CSharp/4.7.0": {
@@ -5245,6 +5297,26 @@
         "system.linq.async.nuspec"
       ]
     },
+    "System.Linq.Async.Queryable/6.0.1": {
+      "sha512": "2kjCNQ/Un1fYq1oujwkiCeMzypWYeatpxbTwgoDhNMw8QTTkadxrTJMwPtLg+r2/qNTYyyiVc4oCsin7633vgA==",
+      "type": "package",
+      "path": "system.linq.async.queryable/6.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Logo.png",
+        "lib/net48/System.Linq.Async.Queryable.dll",
+        "lib/net48/System.Linq.Async.Queryable.xml",
+        "lib/net6.0/System.Linq.Async.Queryable.dll",
+        "lib/net6.0/System.Linq.Async.Queryable.xml",
+        "lib/netstandard2.0/System.Linq.Async.Queryable.dll",
+        "lib/netstandard2.0/System.Linq.Async.Queryable.xml",
+        "lib/netstandard2.1/System.Linq.Async.Queryable.dll",
+        "lib/netstandard2.1/System.Linq.Async.Queryable.xml",
+        "system.linq.async.queryable.6.0.1.nupkg.sha512",
+        "system.linq.async.queryable.nuspec"
+      ]
+    },
     "System.Linq.Expressions/4.1.0": {
       "sha512": "I+y02iqkgmCAyfbqOmSDOgqdZQ5tTj80Akm5BPSS8EeB0VGWdy6X1KCoYe8Pk6pwDoAKZUOdLVxnTJcExiv5zw==",
       "type": "package",
@@ -7511,12 +7583,14 @@
       "Google.Apis.YouTube.v3 >= 1.57.0.2735",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.9",
       "Microsoft.AspNetCore.Identity.MongoDB >= 1.0.2",
+      "Microsoft.Bcl.AsyncInterfaces >= 7.0.0",
       "Microsoft.EntityFrameworkCore >= 5.0.14",
       "Microsoft.VisualStudio.Azure.Containers.Tools.Targets >= 1.14.0",
       "MongoDB.Driver >= 2.19.1",
       "Swashbuckle.AspNetCore >= 5.6.3",
       "System.IdentityModel.Tokens.Jwt >= 6.17.0",
-      "System.Linq.Async >= 6.0.1"
+      "System.Linq.Async >= 6.0.1",
+      "System.Linq.Async.Queryable >= 6.0.1"
     ]
   },
   "packageFolders": {
@@ -7578,6 +7652,10 @@
             "target": "Package",
             "version": "[1.0.2, )"
           },
+          "Microsoft.Bcl.AsyncInterfaces": {
+            "target": "Package",
+            "version": "[7.0.0, )"
+          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[5.0.14, )"
@@ -7599,6 +7677,10 @@
             "version": "[6.17.0, )"
           },
           "System.Linq.Async": {
+            "target": "Package",
+            "version": "[6.0.1, )"
+          },
+          "System.Linq.Async.Queryable": {
             "target": "Package",
             "version": "[6.0.1, )"
           }

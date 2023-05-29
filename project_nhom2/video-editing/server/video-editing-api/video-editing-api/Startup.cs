@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +33,8 @@ namespace video_editing_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Đăng ký đối tượng trình giải mã tùy chỉnh của mình với MongoDB
+            MongoDbInitializer.Initialize();
             services.AddHostedService<MergeQueueBackgroundService>();
             services.AddSignalR();
             services.AddHttpClient();
@@ -125,9 +127,10 @@ namespace video_editing_api
             #region Add Authorization
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Viewer", policy => policy.RequireRole("Viewer"));
-                options.AddPolicy("Uploader", policy => policy.RequireRole("Uploader"));
-                options.AddPolicy("Creator", policy => policy.RequireRole("Creator"));
+                options.AddPolicy("Read", policy => policy.RequireRole("Read"));
+                options.AddPolicy("Write", policy => policy.RequireRole("Write"));
+                options.AddPolicy("Excute", policy => policy.RequireRole("Excute"));
+                options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
             });
             #endregion
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);

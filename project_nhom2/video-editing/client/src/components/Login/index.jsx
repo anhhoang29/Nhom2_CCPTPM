@@ -35,7 +35,7 @@ function Login() {
   const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [roles, setRole] = useState("");
+  const [role, setRole] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -57,7 +57,6 @@ function Login() {
         const body = {
           username,
           password,
-          roles,
         };
         var response = await userApi.signIn(body);
         setLoading(false);

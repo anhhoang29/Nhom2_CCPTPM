@@ -263,10 +263,9 @@ export default function EnhancedTable(props) {
   const [open, setOpen] = React.useState(false);
   const [objEdit, setObjEdit] = React.useState(() => {
     const obj = {
-      userName: "",
+      username: "",
       fullName: "",
       email: "",
-      password: "",
       role: [],
     };
     return obj;
@@ -277,14 +276,33 @@ export default function EnhancedTable(props) {
     setOpen(true);
     setObjEdit(() => {
       const newObj = {
-        userName: obj.userName,
+        username: obj.userName,
         fullName: obj.fullName,
         email: obj.email,
-        password: obj.password,
         role: obj.roles,
       };
       return newObj;
     });
+  };
+
+  const submitEdit = async () => {
+    console.log(objEdit);
+    try {
+      const response = await userApi.update(objEdit.username, objEdit);
+      if (response.data) {
+        enqueueSnackbar(response.data, { variant: "success" });
+        setOpen(false);
+        window.location.reload(false);
+      } else {
+        if (response.description) {
+          enqueueSnackbar(response.description, { variant: "error" });
+        } else {
+          enqueueSnackbar("Update User Faild", { variant: "error" });
+        }
+      }
+    } catch (error) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    }
   };
 
   const handleDelete = async (obj, event) => {
@@ -488,13 +506,6 @@ export default function EnhancedTable(props) {
                     </TableCell>
                     <TableCell
                       align="right"
-                      hidden
-                      onClick={(event) => handleClick(event, row)}
-                    >
-                      {row.password}
-                    </TableCell>
-                    <TableCell
-                      align="right"
                       className="d-flex justify-content-end"
                     >
                       <IconButton
@@ -556,11 +567,12 @@ export default function EnhancedTable(props) {
         setOpenDialog={setOpen}
         title="Edit User"
         txtBtn="Edit"
-        username={objEdit.userName}
+        username={objEdit.username}
         fullName={objEdit.fullName}
         email={objEdit.email}
-        password={objEdit.password}
-        roles={objEdit.roles}
+        role={objEdit.role}
+        setObjEdit={setObjEdit}
+        submitEdit={submitEdit}
       />
     </Box>
   );

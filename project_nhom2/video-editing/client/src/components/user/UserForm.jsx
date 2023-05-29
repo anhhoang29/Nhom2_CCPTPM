@@ -10,6 +10,9 @@ import Box from "@mui/material/Box";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControl from "@mui/material/FormControl";
+import Radio from "@mui/material/Radio";
 import FormLabel from "@mui/material/FormLabel";
 import "./user.css";
 import { userApi } from "../../api";
@@ -23,13 +26,11 @@ const getAllRolesNotAdmin = async () => {
 
   try {
     const res = await roleApi.getAll();
-    roles = res.data;
+    roles = res.data.map((i) => i.name);
   } catch (error) {
     console.log(error);
   }
-  const rolesNotAdmin = roles.filter(
-    (item) => item !== ROLE_ADMIN && item !== ROLE_READ
-  );
+  const rolesNotAdmin = roles.filter((item) => item !== ROLE_ADMIN);
   return rolesNotAdmin;
 };
 
@@ -37,47 +38,9 @@ const rolesApi = await getAllRolesNotAdmin();
 
 var rolesChecked = [];
 
-const RoleCheckbox = ({ selectRole }) => {
-  let roleCheckbox = [];
-  selectRole = [];
-  const handleChangeCheckbox = (event) => {
-    console.log("checkbox change", event);
-    if (event.target.checked) {
-      rolesChecked.push(event.target.name);
-      selectRole.push(event.target.name);
-    } else {
-      const index = rolesChecked.indexOf(event.target.name);
-      if (index !== -1) {
-        rolesChecked.splice(index, 1);
-        selectRole.splice(index, 1);
-      }
-      // setRoles(roles.filter(role => role !== event.target.name));
-    }
-    console.log(rolesChecked);
-  };
-
-  rolesApi.forEach((roleName) => {
-    const form = (
-      <FormControlLabel
-        control={
-          <Checkbox
-            onChange={handleChangeCheckbox}
-            name={roleName}
-            value={roleName}
-          />
-        }
-        label={roleName}
-        value={roleName}
-      />
-    );
-    roleCheckbox.push(form);
-  });
-  return roleCheckbox;
-};
-
 const UserForm = (props) => {
   const { openDialog, title, txtBtn } = props;
-  let selectRole = [];
+  const [selectRole, setSelectRole] = React.useState("");
   // let formTitle = "Add User";
   // let formButtonText = "Add";..
 
@@ -173,68 +136,48 @@ const UserForm = (props) => {
   };
 
   const signUp = async (body) => {
-    // try {
-    //   const response = await userApi.signUp(body);
-    //   if (response.data) {
-    //     await addRoles(response.data.id);
-    //     enqueueSnackbar("Create a successful user", { variant: "success" });
-    //   } else {
-    //     if (response.description) {
-    //       enqueueSnackbar(response.description, { variant: "error" });
-    //     } else {
-    //       enqueueSnackbar("Add User Faild", { variant: "error" });
-    //     }
-    //   }
-    // } catch (error) {
-    //   enqueueSnackbar(error.message, { variant: "error" });
-    // }
-    userApi
-      .signUp(body)
-      .then((res) => {
-        if (res.data) {
-          enqueueSnackbar("Create a successful user", { variant: "success" });
-          setTimeout(() => {
-            addRoles(res.data.id);
-          }, 1500);
-          props.setOpenDialog(false);
-          window.location.reload(false);
+    try {
+      const response = await userApi.signUp(body);
+      if (response.data) {
+        await addRoles(response.data);
+        enqueueSnackbar("Create a successful user", { variant: "success" });
+        props.setOpenDialog(false);
+        window.location.reload(false);
+      } else {
+        if (response.description) {
+          enqueueSnackbar(response.description, { variant: "error" });
+        } else {
+          enqueueSnackbar("Add User Faild", { variant: "error" });
         }
-      })
-      .catch((error) => {
-        enqueueSnackbar(error.message, { variant: "error" });
-      }).finally(()=>{
-
-      });
+      }
+    } catch (error) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    }
   };
 
-  const addRoles = async (id) => {
-    rolesChecked.forEach(async (role) => {
-      setTimeout(async () => {
-        // userApi
-        //   .addRoles(id, role)
-        //   .then((res) => {
-        //     enqueueSnackbar(`Add ${role} Role Successfully`, {
-        //       variant: "success",
-        //     });
-        //   })
-        //   .catch((error) => {
-        //     enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
-        //   });
-        try {
-          const response = await userApi.addRoles(id, role);
-          if (response.data) {
-            enqueueSnackbar(`Add ${role} Role Successfully`, {
-              variant: "success",
-            });
-          } else {
-            enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
-          }
-        } catch (error) {
-          enqueueSnackbar(`Add ${role} Role Faild`, { variant: "error" });
-        }
-      }, 1000);
-    });
-    rolesChecked = [];
+  const addRoles = async (data) => {
+    data.roles = selectRole;
+    console.log(data);
+    const obj = {
+      id: data.id,
+      username: data.userName,
+      fullName: data.fullName,
+      email: data.email,
+      roles: [selectRole],
+    };
+    console.log(obj);
+    try {
+      const response = await userApi.update(obj.username, obj);
+      if (response.data) {
+        enqueueSnackbar(response.data, { variant: "success" });
+        //       props.setOpenDialog(false);
+        //       window.location.reload(false);
+      } else {
+        enqueueSnackbar("Add Roles Failed", { variant: "error" });
+      }
+    } catch (error) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    }
   };
 
   const addUser = async (event) => {
@@ -290,6 +233,27 @@ const UserForm = (props) => {
     // All requirements are met
     return true;
   }
+
+  const handleSelectRole = (event) => {
+    setSelectRole(event.target.value);
+  };
+
+  const FormControlLabelRoles = ({ selectRole }) => {
+    let radios = [];
+    rolesApi.forEach((role) => {
+      const radio = (
+        <FormControlLabel
+          value={role}
+          control={<Radio />}
+          label={role}
+          sx={{ color: "#000" }}
+        />
+      );
+      radios.push(radio);
+    });
+
+    return radios;
+  };
 
   useEffect(() => {}, []);
 
@@ -391,15 +355,26 @@ const UserForm = (props) => {
               }}
               onFocus={handleConfirmPassword}
             />
-
-            <FormLabel
-              component="legend"
-              className={(rolesError ? "textError" : "") + "mt-2"}
-            >
-              Pick Roles *
-            </FormLabel>
-            <FormGroup className="d-flex flex-row justify-content-evenly">
-              <RoleCheckbox selectRole={selectRole} />
+            <FormGroup>
+              <FormControl>
+                <FormLabel
+                  id="demo-radio-buttons-group-label"
+                  className={(rolesError ? "textError" : "") + "mt-2"}
+                >
+                  Pick Role*
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group"
+                  value={selectRole}
+                  onChange={handleSelectRole}
+                  sx={{ color: "#000" }}
+                  className="d-flex flex-row justify-content-evenly"
+                >
+                  <FormControlLabelRoles />
+                </RadioGroup>
+              </FormControl>
             </FormGroup>
           </Box>
         </DialogContent>
