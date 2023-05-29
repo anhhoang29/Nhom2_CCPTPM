@@ -481,7 +481,6 @@ export default function EnhancedTable(props) {
                       component="th"
                       id={labelId}
                       scope="row"
-                      direction="asc"
                       onClick={(event) => handleClick(event, row)}
                     >
                       {row.userName}
@@ -521,13 +520,6 @@ export default function EnhancedTable(props) {
                         onClick={(event) => handleEdit(row, event)}
                       >
                         <BorderColorIcon />
-                      </IconButton>
-                      <IconButton
-                        aria-label="addRoles"
-                        color="primary"
-                        onClick={(event) => handleAssnignRoles(row, event)}
-                      >
-                        <AssignmentIndIcon />
                       </IconButton>
                     </TableCell>
                   </TableRow>

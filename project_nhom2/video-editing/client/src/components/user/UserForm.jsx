@@ -20,6 +20,7 @@ import { SnackbarProvider, useSnackbar } from "notistack";
 import { useEffect } from "react";
 import roleApi from "../../api/roles";
 import { ROLE_ADMIN, ROLE_READ } from "./../../constants/index.js";
+import { UserContext } from "./user";
 
 const getAllRolesNotAdmin = async () => {
   let roles = [];
@@ -67,7 +68,7 @@ const UserForm = (props) => {
   const [emailError, setEmailError] = React.useState(" ");
   const [passwordError, setPasswordError] = React.useState(" ");
   const { enqueueSnackbar } = useSnackbar();
-
+  const { users, getUsers } = React.useContext(UserContext);
   // Role: start
   const handleViewerChange = (event) => {
     setViewer(event.target.checked);
@@ -142,7 +143,8 @@ const UserForm = (props) => {
         await addRoles(response.data);
         enqueueSnackbar("Create a successful user", { variant: "success" });
         props.setOpenDialog(false);
-        window.location.reload(false);
+        getUsers();
+        // window.location.reload(false);
       } else {
         if (response.description) {
           enqueueSnackbar(response.description, { variant: "error" });
