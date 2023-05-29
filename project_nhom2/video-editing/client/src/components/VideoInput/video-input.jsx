@@ -23,6 +23,8 @@ import TableEditVideo from "./TableEditVideo";
 import TableReview from "./TableReview";
 import { DialogDraggableLogo, DialogMoreEvent } from "../flugin";
 import CustomizedSlider from "./Silder";
+import AuthDialog from "../dialog/auth-dialog";
+import { ROLE_EXCUTE, ROLE_WRITE } from "../../constants";
 
 export const formatTimeSlice = (time) => {
   var mind = time % (60 * 60);
@@ -70,6 +72,12 @@ const VideoInput = () => {
   const [opendialogUploadEvent, setOpendialogUploadEvent] = useState(false);
   const [opendialogUploadLogo, setOpendialogUploadLogo] = useState(false);
   const [typeDraggable, setTypeDraggable] = useState();
+  const [authDialog, setAuthDialog] = useState({
+    open: false,
+    content: false,
+  });
+
+  const authRoles = localStorage.getItem("roles");
 
   useEffect(() => {
     previousVideoPieceTime.current = videoPieceTime;
@@ -368,7 +376,11 @@ const VideoInput = () => {
   };
 
   const downloadNoMerge = (files) => {
-    download_files(files);
+    if(authRoles.includes(ROLE_EXCUTE)){
+      download_files(files);
+    } else {
+      setAuthDialog({open: true});
+    }
   };
 
   function download_files(files) {
@@ -394,41 +406,45 @@ const VideoInput = () => {
   }
 
   const handleSendServerNotMerge = () => {
-    const temp = [...logoGallery];
-    const lgg = temp.filter((l) => l.position.x > 0);
+    if (authRoles.includes(ROLE_EXCUTE)) {
+      const temp = [...logoGallery];
+      const lgg = temp.filter((l) => l.position.x > 0);
 
-    const newBitrate = bitrate ? bitrate : "1000";
-    setBitrate(newBitrate);
-    const newBody = {
-      ...body,
-      event: filtered,
-      logo: lgg,
-      resolution: resolution.value,
-      bitrate: newBitrate.toString(),
-    };
+      const newBitrate = bitrate ? bitrate : "1000";
+      setBitrate(newBitrate);
+      const newBody = {
+        ...body,
+        event: filtered,
+        logo: lgg,
+        resolution: resolution.value,
+        bitrate: newBitrate.toString(),
+      };
 
-    const downloadNotMerge = async () => {
-      try {
-        await videoEditingApi.downloadNotMerge(
-          location.state.row.id,
-          hlDescription,
-          newBody
-        );
-        setOpen(false);
-        setNoti(true);
-        setOpenDialog(false);
-        setMessage("Consolidation in progress");
-        setTypeNoti("success");
-        getHighlight();
-      } catch (error) {
-        setNoti(true);
-        setOpen(false);
-        setMessage(error);
-        setTypeNoti("error");
-      }
-    };
-    setOpen(true);
-    downloadNotMerge();
+      const downloadNotMerge = async () => {
+        try {
+          await videoEditingApi.downloadNotMerge(
+            location.state.row.id,
+            hlDescription,
+            newBody
+          );
+          setOpen(false);
+          setNoti(true);
+          setOpenDialog(false);
+          setMessage("Consolidation in progress");
+          setTypeNoti("success");
+          getHighlight();
+        } catch (error) {
+          setNoti(true);
+          setOpen(false);
+          setMessage(error);
+          setTypeNoti("error");
+        }
+      };
+      setOpen(true);
+      downloadNotMerge();
+    } else {
+      setAuthDialog({ open: true });
+    }
   };
 
   const handleClose = () => {
@@ -543,10 +559,14 @@ const VideoInput = () => {
   };
 
   const handleIconRemoveEventClick = (row) => {
-    const temp = [...filtered];
-    const afterRemove = temp.filter((item) => item.file_name !== row.file_name);
+    if(authRoles.includes(ROLE_WRITE)){
+      const temp = [...filtered];
+      const afterRemove = temp.filter((item) => item.file_name !== row.file_name);
+      setFiltered(afterRemove);
+    } else {
+      setAuthDialog({open: true});
+    }
 
-    setFiltered(afterRemove);
   };
 
   const onTrack = (lg, newPos) => {
@@ -584,6 +604,12 @@ const VideoInput = () => {
 
   return (
     <>
+      <AuthDialog
+        open={authDialog.open}
+        setOpen={setAuthDialog}
+        content={authDialog.content}
+      />
+
       <Backdrop
         sx={{
           color: "#fff",
@@ -676,8 +702,12 @@ const VideoInput = () => {
                 }}
                 variant="contained"
                 onClick={() => {
-                  setTypeDraggable("logo");
-                  setOpendialogUploadLogo(true);
+                  if (authRoles.includes(ROLE_WRITE)) {
+                    setTypeDraggable("logo");
+                    setOpendialogUploadLogo(true);
+                  } else {
+                    setAuthDialog({ open: true });
+                  }
                 }}
               >
                 Add Logo
@@ -689,7 +719,11 @@ const VideoInput = () => {
                 }}
                 variant="contained"
                 onClick={() => {
-                  setOpendialogUploadEvent(true);
+                  if (authRoles.includes(ROLE_WRITE)) {
+                    setOpendialogUploadEvent(true);
+                  } else {
+                    setAuthDialog({ open: true });
+                  }
                 }}
               >
                 Add Event

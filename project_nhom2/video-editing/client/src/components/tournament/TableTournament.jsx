@@ -272,7 +272,7 @@ function TableTournament(props) {
             <IconButton
               aria-label="delete"
               onClick={(e) => {
-                handleIconDeleteClick(row);
+              handleIconDeleteClick(row);
               }}
             >
               <DeleteIcon />

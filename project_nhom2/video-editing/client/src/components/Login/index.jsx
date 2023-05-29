@@ -35,7 +35,7 @@ function Login() {
   const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [roles, setRole] = useState("");
+  const [role, setRole] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -57,18 +57,18 @@ function Login() {
         const body = {
           username,
           password,
-          roles,
         };
         var response = await userApi.signIn(body);
         setLoading(false);
         Cookies.set("Token", response.data.token);
         localStorage.setItem("fullName", response.data.fullName);
         localStorage.setItem("username", response.data.username);
-        localStorage.setItem("role", response.data.role);
-        const isAdmin = response.data.role.includes('Admin');
+        // Phân quyền: lưu danh sách các quyền vào localStrorage
+        localStorage.setItem("roles", response.data.role);
+        const isAdmin = response.data.role.includes("Admin");
         localStorage.setItem("isAdmin", isAdmin);
-        if(isAdmin){
-          navigate("/admin/user")
+        if (isAdmin) {
+          navigate("/admin/user");
         } else {
           navigate("/");
         }

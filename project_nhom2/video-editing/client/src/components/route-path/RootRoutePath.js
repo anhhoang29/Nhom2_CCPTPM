@@ -31,7 +31,7 @@ function rootRouters() {
         />
         <Route
           path="/*"
-          element={
+          element={ 
             <PrivateRoute
               element={
                 <NavTabs>

@@ -15,6 +15,8 @@ import { DeleteOutlined } from "@ant-design/icons";
 import ReactPlayer from "react-player";
 import DialogUpload from "./DialogUpload";
 import videoEditingApi from "../../api/video-editing";
+import AuthDialog from "../dialog/auth-dialog";
+import { ROLE_WRITE } from "../../constants";
 
 const { Title } = Typography;
 
@@ -59,6 +61,7 @@ function Gallery() {
   const [typeNoti, setTypeNoti] = useState();
 
   const [gallery, setGallery] = useState([]);
+  
   console.log(gallery);
 
   const getGallery = async () => {
@@ -69,6 +72,22 @@ function Gallery() {
       console.log(error);
     }
   };
+
+  const [authDialog, setAuthDialog] = useState({
+    open: false,
+    content: false,
+  });
+  const authRoles = localStorage.getItem('roles');
+
+
+  const handleAdd = () => {
+    if(authRoles.includes(ROLE_WRITE)){
+      setOpen(true);
+    } else {
+      setAuthDialog({open: true});
+    }
+  }
+
   useEffect(() => {
     getGallery();
   }, [viewMode]);
@@ -140,23 +159,28 @@ function Gallery() {
   };
 
   const onDelete = (id) => {
-    const deleteGallery = async () => {
-      try {
-        await videoEditingApi.deleteGallery(id);
-        getGallery();
-        setNoti(true);
-        setMessage("Delete Succeed");
-        setTypeNoti("success");
-      } catch (error) {
-        setNoti(true);
-        setMessage(error.response.data.description);
-        setTypeNoti("error");
-      }
-    };
-    deleteGallery();
+    if(authRoles.includes(ROLE_WRITE)){
+      const deleteGallery = async () => {
+        try {
+          await videoEditingApi.deleteGallery(id);
+          getGallery();
+          setNoti(true);
+          setMessage("Delete Succeed");
+          setTypeNoti("success");
+        } catch (error) {
+          setNoti(true);
+          setMessage(error.response.data.description);
+          setTypeNoti("error");
+        }
+      };
+      deleteGallery();
+    } else {
+      setAuthDialog({open: true});
+    }
   };
   return (
     <>
+    <AuthDialog open={authDialog.open} setOpen={setAuthDialog} content={authDialog.content}/>
       <Backdrop
         sx={{
           color: "#fff",
@@ -201,7 +225,7 @@ function Gallery() {
             {viewMode === -1 ? "All" : viewMode === 0 ? "Image" : "Video"}
           </Fab>
         </Popover>
-        <Fab color="primary" aria-label="add" onClick={() => setOpen(true)}>
+        <Fab color="primary" aria-label="add" onClick={handleAdd}>
           <AddIcon />
         </Fab>
       </Box>

@@ -27,6 +27,8 @@ import TableReview from "../VideoInput/TableReview";
 import HighlightReview from "../highlight-review";
 import { DialogDraggableLogo, DialogMoreEvent } from "../flugin";
 import CustomizedSlider from "../VideoInput/Silder";
+import AuthDialog from "../dialog/auth-dialog";
+import { ROLE_EXCUTE, ROLE_WRITE } from "../../constants";
 
 function HighlightFilter() {
   const [bitrate, setBitrate] = useState("1000");
@@ -79,6 +81,12 @@ function HighlightFilter() {
   const [logoGallery, setLogoGallery] = useState();
   const [openDialogMoreEvent, setOpenDialogMoreEvent] = useState(false);
   const [openDialogMoreLogo, setOpenDialogMoreLogo] = useState(false);
+  const [authDialog, setAuthDialog] = useState({
+    open: false,
+    content: false,
+  });
+
+  const authRoles = localStorage.getItem('roles');
 
   const getHighlight = async () => {
     try {
@@ -226,9 +234,13 @@ function HighlightFilter() {
   };
 
   const handleIconRemoveEventClick = (row) => {
-    const temp = [...filtered];
-    const afterRemove = temp.filter((item) => item.file_name !== row.file_name);
-    setFiltered(afterRemove);
+    if(authRoles.includes(ROLE_WRITE)){
+      const temp = [...filtered];
+      const afterRemove = temp.filter((item) => item.file_name !== row.file_name);
+      setFiltered(afterRemove);
+    } else {
+      setAuthDialog({open: true});
+    }
   };
 
   const handleEditVideo = () => {
@@ -383,46 +395,50 @@ function HighlightFilter() {
 
   const mergeVideoHL = (e) => {
     e.preventDefault();
-    const temp = [...logoGallery];
+    if(authRoles.includes(ROLE_EXCUTE)){
+      const temp = [...logoGallery];
 
-    const lggg = temp.reduce((logoSent, tempLogo) => {
-      if (tempLogo.selected) {
-        const logoSentItem = {
-          position: tempLogo.position,
-          file_name: tempLogo.file_name,
-          size: tempLogo.size,
-        };
-        logoSent.push(logoSentItem);
-      }
-      return logoSent;
-    }, []);
-    const newBitrate = bitrate ? bitrate : "1000";
-    setBitrate(newBitrate);
-    const body = {
-      event: filtered,
-      logo: lggg,
-      description: hlDescription,
-      resolution: resolution.value,
-      bitrate: newBitrate.toString(),
-    };
-    const mergeHL = async () => {
-      try {
-        await videoEditingApi.mergeHL(body);
-        setOpen(false);
-        setNoti(true);
-        setMessage("Consolidation in progress");
-        setTypeNoti("success");
-        handleClose();
-        getHighlight();
-      } catch (error) {
-        setOpen(false);
-        setNoti(true);
-        setMessage(error.response.data.description);
-        setTypeNoti("error");
-      }
-    };
-    setOpen(true);
-    mergeHL();
+      const lggg = temp.reduce((logoSent, tempLogo) => {
+        if (tempLogo.selected) {
+          const logoSentItem = {
+            position: tempLogo.position,
+            file_name: tempLogo.file_name,
+            size: tempLogo.size,
+          };
+          logoSent.push(logoSentItem);
+        }
+        return logoSent;
+      }, []);
+      const newBitrate = bitrate ? bitrate : "1000";
+      setBitrate(newBitrate);
+      const body = {
+        event: filtered,
+        logo: lggg,
+        description: hlDescription,
+        resolution: resolution.value,
+        bitrate: newBitrate.toString(),
+      };
+      const mergeHL = async () => {
+        try {
+          await videoEditingApi.mergeHL(body);
+          setOpen(false);
+          setNoti(true);
+          setMessage("Consolidation in progress");
+          setTypeNoti("success");
+          handleClose();
+          getHighlight();
+        } catch (error) {
+          setOpen(false);
+          setNoti(true);
+          setMessage(error.response.data.description);
+          setTypeNoti("error");
+        }
+      };
+      setOpen(true);
+      mergeHL();
+    } else {
+      setAuthDialog({open: true});
+    } 
   };
 
   const handleCloseEventAndLogo = () => {
@@ -473,6 +489,7 @@ function HighlightFilter() {
   };
   return (
     <>
+      <AuthDialog open={authDialog.open} setOpen={setAuthDialog} content={authDialog.content}/>
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={noti}
@@ -580,8 +597,12 @@ function HighlightFilter() {
                 }}
                 variant="contained"
                 onClick={() => {
-                  setTypeDraggable("logo");
-                  setOpenDialogMoreLogo(true);
+                  if(authRoles.includes(ROLE_WRITE)){
+                    setTypeDraggable("logo");
+                    setOpenDialogMoreLogo(true);
+                  } else {
+                    setAuthDialog({open: true});
+                  }
                 }}
               >
                 Add Logo
@@ -594,7 +615,11 @@ function HighlightFilter() {
                 }}
                 variant="contained"
                 onClick={() => {
-                  setOpenDialogMoreEvent(true);
+                  if(authRoles.includes(ROLE_WRITE)){
+                    setOpenDialogMoreEvent(true);
+                  } else {
+                    setAuthDialog({open: true});
+                  }
                 }}
               >
                 Add Event

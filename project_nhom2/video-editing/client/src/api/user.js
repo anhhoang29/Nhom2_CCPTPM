@@ -9,6 +9,10 @@ const userApi = {
     const url = "/Users/SignUp";
     return axiosClient.post(url, body);
   },
+  update: async (username, body) => {
+    const url = `/Users/update/${username}`;
+    return axiosClient.put(url, body);
+  },
   forgotPassword: (body) => {
     const url = "/Users/ForgotPassword";
     return axiosClient.post(url, body);
@@ -20,9 +24,11 @@ const userApi = {
     return response;
   },
 
-  addRoles: (userId, roleName) => {
+  addRoles: async (userId, roleName) => {
     const url = `/Role/AddRole/${userId}/${roleName}`;
-    return axiosClient.post(url);
+    const http = axiosClient;
+    http.defaults.timeout= 1000;
+    return http.post(url);
   },
 
   deleteUser: (id) => {

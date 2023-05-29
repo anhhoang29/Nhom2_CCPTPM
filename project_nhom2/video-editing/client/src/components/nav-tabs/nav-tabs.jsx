@@ -23,16 +23,14 @@ import {
   SubMenu,
 } from "react-pro-sidebar";
 import User from "../user/user";
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 function ResponsiveDrawer(props) {
   const [collapsed, setCollapsed] = React.useState(true);
-  console.log(props.children);
   const [listItem, setListItem] = React.useState(() => {
-    const isAdmin = localStorage.getItem('isAdmin');
+    const isAdmin = localStorage.getItem("isAdmin");
     let listItem;
-    if(isAdmin === 'true') {
-      console.log('is Admin');
+    if (isAdmin === "true") {
       listItem = [
         {
           name: "User",
@@ -41,7 +39,7 @@ function ResponsiveDrawer(props) {
         },
       ];
     } else {
-      console.log('is Not Admin');
+      console.log("is Not Admin");
 
       listItem = [
         { name: "Soccer", url: "/", icon: <SportsSoccerIcon /> },
@@ -63,6 +61,7 @@ function ResponsiveDrawer(props) {
   const handleLogout = () => {
     Cookies.remove("Token");
     localStorage.removeItem("fullName");
+    localStorage.removeItem("roles");
     navigate("/login");
   };
   const handleCollapsed = () => {
@@ -122,6 +121,9 @@ function ResponsiveDrawer(props) {
           <SidebarFooter style={{ textAlign: "center" }}>
             <div style={{ fontSize: 16, padding: 1 }}>
               WELCOME {localStorage.getItem("fullName")}
+            </div>
+            <div style={{ fontSize: 16, padding: 1 }} >
+              Roles: {localStorage.getItem("roles")}
             </div>
             <div>
               <Tooltip key={1} title="Logout" placement="right">
