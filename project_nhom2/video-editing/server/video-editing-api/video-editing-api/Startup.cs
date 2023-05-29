@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -17,6 +19,7 @@ using video_editing_api.Service.Film;
 using video_editing_api.Service.Storage;
 using video_editing_api.Service.User;
 using video_editing_api.Service.VideoEditing;
+using static video_editing_api.Controllers.VideoEditingsController;
 
 namespace video_editing_api
 {
@@ -131,7 +134,25 @@ namespace video_editing_api
                 options.AddPolicy("Write", policy => policy.RequireRole("Write"));
                 options.AddPolicy("Excute", policy => policy.RequireRole("Excute"));
                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+                //options.AddPolicy("fullpermisson", policy =>
+                //{
+                //    policy.RequireAssertion(context =>
+                //    context.User.IsInRole("Admin") ||
+                //    context.User.IsInRole("Write") ||
+                //    context.User.IsInRole("Read") ||
+                //    context.User.IsInRole("Execute"));
+                //});
+                //options.AddPolicy("ThreeRoles", policy => policy.Requirements.Add(new ThreeRolesRequirement(new[] { "Admin", "Write", "Read" })));
             });
+            //services.AddMvc(options =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //        .RequireAuthenticatedUser()
+            //        .RequireRole("Admin", "Write", "Read")
+            //        .Build();
+            //    options.Filters.Add(new AuthorizeFilter(policy));
+            //});
+            //services.AddSingleton<IAuthorizationHandler, ThreeRolesHandler>();
             #endregion
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
             #region Add Swagger
@@ -198,6 +219,12 @@ namespace video_editing_api
                 endpoints.MapControllers();
                 endpoints.MapHub<NotiHub>("/noti");
             });
+            //app.UseCors(options =>
+            //    options.WithOrigins("https://localhost:5001") // Thay đổi theo domain 
+            //    .AllowAnyHeader()
+            //    .AllowAnyMethod()
+            //    .AllowCredentials()
+            //);
         }
     }
 }

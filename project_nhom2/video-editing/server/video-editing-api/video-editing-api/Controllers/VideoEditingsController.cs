@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,24 @@ namespace video_editing_api.Controllers
             _videoEditingService = videoEditingService;
         }
 
+        // check permission
+        private bool IsAuthorized(HttpContext context, string role)
+        {
+            // Kiểm tra xem người dùng đã xác thực chưa
+            if (!context.User.Identity.IsAuthenticated)
+            {
+                return false;
+            }
+
+            // Kiểm tra xem người dùng có vai trò được yêu cầu không
+            if (!context.User.IsInRole(role))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
 
         [HttpGet("getTournament")]
        
@@ -43,7 +62,7 @@ namespace video_editing_api.Controllers
             }
         }
         [HttpPost("addTournament")]
-        [Authorize(Roles = "Admin,Write")]
+        [Authorize(Roles = "Admin,Write,Read")]
         public async Task<IActionResult> AddTournament([FromBody] List<Tournament> tournaments)
         {
             try
@@ -58,7 +77,7 @@ namespace video_editing_api.Controllers
         }
 
         [HttpGet("getMatchById")]
-
+        //[Authorize(Roles = "fullpermisson")]
         public async Task<IActionResult> GetMatch(string Id)
         {
             try

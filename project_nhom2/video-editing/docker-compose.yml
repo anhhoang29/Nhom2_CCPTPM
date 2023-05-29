@@ -1,29 +1,45 @@
-#version: "3.8"
-#services:
-  #app:
-    #container_name: video-analysis
-    #image: video-analysis
-    #build:
-      #context: ./client
-      #target: production
-    #ports:
-      #- "5002:80"
 version: '3.8'
 
 services:
-  video-editing-api:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-      - "443:443"
-
   frontend:
+    container_name: frontend-container
     build:
       context: ./client
+      dockerfile: dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    container_name: backend-container
+    build:
+      context: ./server/video-editing-api
       dockerfile: Dockerfile
     ports:
-      - "8080:80"
+      - "5001:80"
     depends_on:
-      - video-editing-api
+      - database
+    networks:
+      - app-network
+    environment:
+      MONGO_URI: mongodb://database:27017/VideoEditing
+
+  database:
+    container_name: mongodb
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
