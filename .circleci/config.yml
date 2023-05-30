@@ -9,7 +9,8 @@ jobs:
       - run:
           name: Build and push API image
           command: |
-            cd ../project_nhom2/video-editing/client
+            cd ..
+            cd /project_nhom2/video-editing/client
             docker build -t anhhoang2910/frontend:latest ./client
             docker login -u $anhhoang2910 -p $0965120724Anh
             docker push anhhoang2910/frontend:latest
