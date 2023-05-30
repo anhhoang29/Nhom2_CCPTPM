@@ -17,6 +17,7 @@ import TableHighlight from "./TableHighlight";
 import { ConfirmDialog } from "../flugin";
 import { Typography } from "antd";
 import TableFilterHL from "../HiglightFilter/TableFilterHL";
+import { ROLE_WRITE } from "../../constants";
 
 function HighlightReview(props) {
   const { highlights, getHighlight, mode, downloadNoMerge } = props;
@@ -38,6 +39,14 @@ function HighlightReview(props) {
 
   const [scroll, setScroll] = useState("paper");
   const descriptionElementRef = React.useRef(null);
+  const authRoles = localStorage.getItem('roles');
+
+  const [authDialog, setAuthDialog] = useState({
+    open: false,
+    content: false,
+  });
+
+  
 
   const handleViewClick = (highlight) => {
     setName(
@@ -71,8 +80,15 @@ function HighlightReview(props) {
   };
 
   const handleIconDeleteClick = (highlight) => {
-    setRowDelete(highlight);
-    setOpenDConfirm(true);
+    
+    if(authRoles.includes(ROLE_WRITE)){
+      setRowDelete(highlight);
+      setOpenDConfirm(true);
+    } else {
+      setAuthDialog({open: true});
+    }
+
+
   };
 
   return (

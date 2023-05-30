@@ -10,25 +10,50 @@ import Box from "@mui/material/Box";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControl from "@mui/material/FormControl";
+import Radio from "@mui/material/Radio";
 import FormLabel from "@mui/material/FormLabel";
 import "./user.css";
 import { userApi } from "../../api";
 import { SnackbarProvider, useSnackbar } from "notistack";
+import { useEffect } from "react";
+import roleApi from "../../api/roles";
+import { ROLE_ADMIN, ROLE_READ } from "./../../constants/index.js";
+import { UserContext } from "./user";
+
+const getAllRolesNotAdmin = async () => {
+  let roles = [];
+
+  try {
+    const res = await roleApi.getAll();
+    roles = res.data.map((i) => i.name);
+  } catch (error) {
+    console.log(error);
+  }
+  const rolesNotAdmin = roles.filter((item) => item !== ROLE_ADMIN);
+  return rolesNotAdmin;
+};
+
+const rolesApi = await getAllRolesNotAdmin();
+
+var rolesChecked = [];
 
 const UserForm = (props) => {
   const { openDialog, title, txtBtn } = props;
+  const [selectRole, setSelectRole] = React.useState("");
   // let formTitle = "Add User";
   // let formButtonText = "Add";..
 
   const formCancelButtonText = "Cancel";
   const wrongPassword = "Password does not match";
   // set Title:
-
   const [formTitle, setFormTitle] = React.useState(title);
   const [formButtonText, setFormButtonText] = React.useState(txtBtn);
   const [username, setUsername] = React.useState("");
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState("");
+  const [roles, setRoles] = React.useState([]);
   const [viewer, setViewer] = React.useState(true);
   const [creator, setCreator] = React.useState(false);
   const [uploader, setUploader] = React.useState(false);
@@ -43,8 +68,7 @@ const UserForm = (props) => {
   const [emailError, setEmailError] = React.useState(" ");
   const [passwordError, setPasswordError] = React.useState(" ");
   const { enqueueSnackbar } = useSnackbar();
-  
-  const [idSignUp, setIdSignUp] = React.useState('');
+  const { users, getUsers } = React.useContext(UserContext);
   // Role: start
   const handleViewerChange = (event) => {
     setViewer(event.target.checked);
@@ -76,6 +100,7 @@ const UserForm = (props) => {
   };
 
   const handleSubmit = (event) => {
+    console.log(event);
     if (isValidate()) {
       // handleClose();
       addUser(event);
@@ -111,76 +136,53 @@ const UserForm = (props) => {
     return !isError;
   };
 
-  const getRoles = () => {
-    let rs = [];
-    if (creator) {
-      rs.push("Creator");
-    }
-    if (uploader) {
-      rs.push("Uploader");
-    }
-    return rs;
-  };
-
-  const signUp = (body) => {
-    // const res = userApi.signUp(body);
-    // if(res.data){
-    //   enqueueSnackbar("Create a successful user", { variant: "success" });
-    //   addRoles(res.data.id);
-    // } else{
-    //   enqueueSnackbar(`${res.status}: ${res.description}`, { variant: "error" });
-    // }
-    userApi
-      .signUp(body)
-      .then((res) => {
+  const signUp = async (body) => {
+    try {
+      const response = await userApi.signUp(body);
+      if (response.data) {
+        await addRoles(response.data);
         enqueueSnackbar("Create a successful user", { variant: "success" });
-        console.log(res);
         props.setOpenDialog(false);
-        window.location.reload(false);
-        // get Id from response
-        addRoles(res.data.id);
-      })
-      .catch((error) => {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          enqueueSnackbar(error.response.data.description, { variant: "error" });
-        } else{
-          enqueueSnackbar(error.message, { variant: "error" });
+        getUsers();
+        // window.location.reload(false);
+      } else {
+        if (response.description) {
+          enqueueSnackbar(response.description, { variant: "error" });
+        } else {
+          enqueueSnackbar("Add User Faild", { variant: "error" });
         }
-      });
+      }
+    } catch (error) {
+      enqueueSnackbar(error.message, { variant: "error" });
+    }
   };
 
-  // const addRole = async (id, role) => {
-  //   userApi.addRoles(id , role).then(res => {
-  //     console.log(res);
-  //     enqueueSnackbar(`Add ${role} Role Successfully`, { variant: "success" });
-  //   }).catch(error => {
-  //     enqueueSnackbar(`Add ${role} Role Faild`, { variant: 'error' });
-  //   })
-  // }
-
-  const addRoles = async (id) => {
-    if(creator){
-      const response = await userApi.addRoles(id, 'Creator');
-      console.log(response);
-      if(response.data){
-        enqueueSnackbar(`Add Creator Role Successfully`, { variant: "success" });
-      } else{
-        enqueueSnackbar(`Add Uploader Role Faild`, { variant: 'error' });
+  const addRoles = async (data) => {
+    data.roles = selectRole;
+    console.log(data);
+    const obj = {
+      id: data.id,
+      username: data.userName,
+      fullName: data.fullName,
+      email: data.email,
+      roles: [selectRole],
+    };
+    console.log(obj);
+    try {
+      const response = await userApi.update(obj.username, obj);
+      if (response.data) {
+        enqueueSnackbar(response.data, { variant: "success" });
+        //       props.setOpenDialog(false);
+        //       window.location.reload(false);
+      } else {
+        enqueueSnackbar("Add Roles Failed", { variant: "error" });
       }
+    } catch (error) {
+      enqueueSnackbar(error.message, { variant: "error" });
     }
-    if(uploader){
-      const response = await userApi.addRoles(id, 'Uploader');
-      if(response.data){
-        enqueueSnackbar(`Add Uploader Role Successfully`, { variant: "success" });
-      } else{
-        enqueueSnackbar(`Add Creator Role Faild`, { variant: 'error' });
-      }
-    }
-  }
+  };
 
-  const addUser = (event) => {
+  const addUser = async (event) => {
     const body = {
       username,
       fullName,
@@ -188,7 +190,7 @@ const UserForm = (props) => {
       password,
     };
 
-    signUp(body)
+    signUp(body);
   };
 
   const handleConfirmPassword = () => {
@@ -233,6 +235,29 @@ const UserForm = (props) => {
     // All requirements are met
     return true;
   }
+
+  const handleSelectRole = (event) => {
+    setSelectRole(event.target.value);
+  };
+
+  const FormControlLabelRoles = ({ selectRole }) => {
+    let radios = [];
+    rolesApi.forEach((role) => {
+      const radio = (
+        <FormControlLabel
+          value={role}
+          control={<Radio />}
+          label={role}
+          sx={{ color: "#000" }}
+        />
+      );
+      radios.push(radio);
+    });
+
+    return radios;
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <Box
@@ -332,28 +357,26 @@ const UserForm = (props) => {
               }}
               onFocus={handleConfirmPassword}
             />
-
-            <FormLabel
-              component="legend"
-              className={(rolesError ? "textError" : "") + "mt-2"}
-            >
-              Pick Roles *
-            </FormLabel>
-            <FormGroup className="d-flex flex-row justify-content-evenly">
-              <FormControlLabel
-                control={
-                  <Checkbox onChange={handleViewerChange} defaultChecked />
-                }
-                label="Viewer"
-              />
-              <FormControlLabel
-                control={<Checkbox onChange={handleCreatorChange} />}
-                label="Creator"
-              />
-              <FormControlLabel
-                control={<Checkbox onChange={handleUploaderChange} />}
-                label="Uploader"
-              />
+            <FormGroup>
+              <FormControl>
+                <FormLabel
+                  id="demo-radio-buttons-group-label"
+                  className={(rolesError ? "textError" : "") + "mt-2"}
+                >
+                  Pick Role*
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group"
+                  value={selectRole}
+                  onChange={handleSelectRole}
+                  sx={{ color: "#000" }}
+                  className="d-flex flex-row justify-content-evenly"
+                >
+                  <FormControlLabelRoles />
+                </RadioGroup>
+              </FormControl>
             </FormGroup>
           </Box>
         </DialogContent>

@@ -1,20 +1,19 @@
 version: '3.8'
 
 services:
-  frontend:
-    container_name: frontend-container
-    build:
-      context: ./client
-      dockerfile: dockerfile
+  database:
+    container_name: mongodb
+    image: mongo
+    command: mongod --bind_ip_all --port 27017
     ports:
-      - "3000:80"
-    depends_on:
-      - backend
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
     networks:
-      - app-network
+      - mongo-network  
 
-  backend:
-    container_name: backend-container
+  api:
+    container_name: api-container
     build:
       context: ./server/video-editing-api
       dockerfile: Dockerfile
@@ -23,23 +22,33 @@ services:
     depends_on:
       - database
     networks:
-      - app-network
+      - mongo-network
     environment:
-      MONGO_URI: mongodb://database:27017/VideoEditing
+      MONGO_URI: mongodb://mongodb:27017/VideoEditing
 
-  database:
-    container_name: mongodb
+  init-mongo:
+    container_name: init-mongo-container
     image: mongo
-    ports:
-      - "27017:27017"
+    command: mongo mongodb://mongodb:27017/VideoEditing /init-mongo.js
     volumes:
-      - mongodb_data:/data/db
+      - ./init-mongo.js:/init-mongo.js
+    depends_on:
+      - database
     networks:
-      - app-network
+      - mongo-network
 
-networks:
-  app-network:
-    driver: bridge
+  frontend:
+    container_name: frontend-container
+    build:
+      context: ./client
+      dockerfile: dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - mongo-network
 
 volumes:
   mongodb_data:
+
+networks:
+  mongo-network:

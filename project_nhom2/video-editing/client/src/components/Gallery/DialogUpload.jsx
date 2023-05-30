@@ -14,6 +14,7 @@ import {
 import React, { useRef } from "react";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import { FileUploader } from "react-drag-drop-files";
+import './gallery.css';
 
 const TypeFileUploadMatrix = [["PNG"], ["MP4"]];
 
@@ -47,7 +48,7 @@ function DialogUpload(props) {
           <CancelOutlinedIcon />
         </IconButton>
       </DialogTitle>
-      <DialogContent dividers={true}>
+      <DialogContent dividers={true} className="bg-white">
         <DialogContentText
           id="scroll-dialog-description"
           ref={descriptionElementRef}
