@@ -12,7 +12,7 @@ jobs:
             pwd
             cd project_nhom2/video-editing/client
             docker build -t anhhoang2910/frontend:latest .
-            docker login -u $hoangvuanh101@gmail.com -p $0965120724Anh
+            docker login -u $anhhoang2910 -p $0965120724Anh
             docker push anhhoang2910/frontend:latest
 workflows:
   build-and-publish:
