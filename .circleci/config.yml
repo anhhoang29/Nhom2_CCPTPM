@@ -9,15 +9,9 @@ jobs:
       - run:
           name: Build and push API image
           command: |
-            docker build -t anhhoang2910/api:latest ./server/video-editing-api
-            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-            docker push anhhoang2910/api:latest
-      - run:
-          name: Build and push frontend image
-          command: |
-            docker build -t anhhoang2910/frontend:latest ./client
-            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-            docker push anhhoang2910/frontend:latest
+            docker compose up --build 
+            
+      
 workflows:
   build-and-publish:
     jobs:
